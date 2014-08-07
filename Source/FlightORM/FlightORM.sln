@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.Core", "FlightORM.Core\FlightORM.Core.csproj", "{C6E3981D-3CBE-4E8C-877D-BFE7EA5C6278}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.SqlServer", "FlightORM.SqlServer\FlightORM.SqlServer.csproj", "{BF126864-D765-4F06-9223-5FEBFA32F0AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C6E3981D-3CBE-4E8C-877D-BFE7EA5C6278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6E3981D-3CBE-4E8C-877D-BFE7EA5C6278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6E3981D-3CBE-4E8C-877D-BFE7EA5C6278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF126864-D765-4F06-9223-5FEBFA32F0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF126864-D765-4F06-9223-5FEBFA32F0AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF126864-D765-4F06-9223-5FEBFA32F0AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF126864-D765-4F06-9223-5FEBFA32F0AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
