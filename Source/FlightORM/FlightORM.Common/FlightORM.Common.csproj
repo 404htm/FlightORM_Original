@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TypeMapping.cs" />
+    <Compile Include="ConfigBase.cs" />
+    <Compile Include="TypeMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConverter.cs" />
   </ItemGroup>

@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace FlightORM.SqlServer
 {
-    public class Class1
+    public class SchemaInfo
     {
+        private SchemaInfo()
+        {
+
+        }
+
+		//public SchemaInfo Read(string connectionString)
+		//{
+			
+		//}
+
+
     }
 }
