@@ -16,23 +16,32 @@ namespace FlightORM.Common
 		{
 			using (var str = new MemoryStream())
 			{
-				var ser = new DataContractJsonSerializer(typeof(T));
-				ser.WriteObject(str, (T)this);
+				Save(str);
 				File.WriteAllBytes(filename, str.ToArray());
 			}
 		}
 
-		public static T Load(string filename)
+		public void Save(Stream stream)
 		{
 			var ser = new DataContractJsonSerializer(typeof(T));
+			ser.WriteObject(stream, (T)this);
+		}
+
+		public static T Load(string filename)
+		{
 			using(var str = new FileStream(filename, FileMode.Open))
 			{
+				return Load(str);
+			}
+		}
+
+		public static T Load(Stream stream)
+		{
 				T result;
-				result = (T)ser.ReadObject(str);
+				var ser = new DataContractJsonSerializer(typeof(T));
+				result = (T)ser.ReadObject(stream);
 				result.OnDeserialization();
 				return result;
-			}
-			
 		}
 
 		protected virtual void OnDeserialization()
