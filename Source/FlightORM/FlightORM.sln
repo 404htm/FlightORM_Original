@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjects", "TestProject
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.CommonTests", "FlightORM.CommonTests\FlightORM.CommonTests.csproj", "{456F7002-83B5-4D7E-A5D2-C09B88734735}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FlightORM.TestDB", "FlightORM.TestDB\FlightORM.TestDB.sqlproj", "{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,11 +37,18 @@ Global
 		{456F7002-83B5-4D7E-A5D2-C09B88734735}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{456F7002-83B5-4D7E-A5D2-C09B88734735}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{456F7002-83B5-4D7E-A5D2-C09B88734735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{456F7002-83B5-4D7E-A5D2-C09B88734735} = {99E1B88D-BFE8-4686-BDFD-DC9057573545}
+		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A} = {99E1B88D-BFE8-4686-BDFD-DC9057573545}
 	EndGlobalSection
 EndGlobal
