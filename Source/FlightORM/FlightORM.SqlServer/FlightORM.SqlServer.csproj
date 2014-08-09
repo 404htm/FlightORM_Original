@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Defaults\sqlserver_typemap.json" />
+    <EmbeddedResource Include="Defaults\default.typemap" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
