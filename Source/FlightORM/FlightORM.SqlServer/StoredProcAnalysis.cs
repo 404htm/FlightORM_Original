@@ -54,29 +54,57 @@ namespace FlightORM.SqlServer
 		}
 
 
-		//public void LoadParameters(StoredProcedure procedure)
-		//{
-		
-
-		//}
+		public void LoadParameters(StoredProcedure procedure)
+		{
+			var query = @"select p.name as Name, p.object_id as ProcedureId, p.parameter_id as 'position', t.name as 't.name', 
+							p.is_output as 'output', p.max_length as 't.maxLen', p.precision as 't.precision', 
+							p.scale as 't.scale', p.is_readonly as readonly, p.has_default_value as hasDefault, 
+							default_value as defaultValue
+						from sys.parameters p
+						left join sys.types t ON t.user_type_id = p.user_type_id
+						where p.object_id = @sp_id";
+			
+			using (var cnn = new SqlConnection(_connectionString))
+			{
+				cnn.Open();
+				var cmd = new SqlCommand(query, cnn);
+				cmd.Parameters.Add(new SqlParameter("@sp_id", procedure.Id));
+				var reader = cmd.ExecuteReader();
+				procedure.InputParameters = getParameters(reader).Select(p => p.Item2).ToList();
+			}
+		}
 
 		//public void LoadParameters(List<StoredProcedure> procedures)
 		//{
-		
+				//TODO: Enable bulk load
 
 		//}
 
-		//private IEnumerable<SPParameter> getParameters(SqlDataReader reader)
-		//{
-		//	var cols = reader.GetColumnLookup();
-		//	foreach (var r in reader)
-		//	{
-		//		var param = new SPParameter{
-		//			Name = 
+		private IEnumerable<Tuple<int, SPParameter>> getParameters(SqlDataReader reader)
+		{
+			var index = reader.GetColumnLookup();
+			foreach (var r in reader)
+			{
+				var procId = reader.GetInt32(index["ProcedureId"]);
 
-		//		}
-		//	}
+				var typeInfo = new DbTypeInfo();
+				typeInfo.TypeName = reader.GetString(index["t.name"]);
+				typeInfo.MaxLength = reader.GetInt16(index["t.maxLen"]);
+				typeInfo.Precision = reader.GetByte(index["t.precision"]);
+				typeInfo.Scale = reader.GetByte(index["t.scale"]);
 
-		//}
+				var param = new SPParameter();
+				param.Name = reader.GetString(index["Name"]);
+				param.Position = reader.GetInt32(index["position"]);
+				param.TypeInfo = typeInfo;
+				param.IsOutput = reader.GetBoolean(index["output"]);
+				param.IsReadOnly = reader.GetBoolean(index["readonly"]);
+				param.HasDefault = reader.GetBoolean(index["hasDefault"]);
+				param.DefaultValue = reader.GetValue(index["defaultValue"]);
+
+				yield return Tuple.Create(procId, param);
+			}
+
+		}
 	}
 }
