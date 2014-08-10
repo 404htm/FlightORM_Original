@@ -5,9 +5,7 @@ using System.Text;
 
 namespace FlightORM.Common
 {
-	public class SPParameter
+	public class QueryOutput
 	{
-		public string Name { get; set;}
-		//internal st
 	}
 }

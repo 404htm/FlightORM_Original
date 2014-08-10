@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.CommonTests", "Fl
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FlightORM.TestDB", "FlightORM.TestDB\FlightORM.TestDB.sqlproj", "{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.SqlServerTests", "FlightORM.SqlServerTests\FlightORM.SqlServerTests.csproj", "{0D49B6F8-2275-4296-818C-828C74B40EE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0D49B6F8-2275-4296-818C-828C74B40EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D49B6F8-2275-4296-818C-828C74B40EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D49B6F8-2275-4296-818C-828C74B40EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D49B6F8-2275-4296-818C-828C74B40EE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,5 +56,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{456F7002-83B5-4D7E-A5D2-C09B88734735} = {99E1B88D-BFE8-4686-BDFD-DC9057573545}
 		{D5E90A5B-5C74-4015-BB49-94AA46F6CF5A} = {99E1B88D-BFE8-4686-BDFD-DC9057573545}
+		{0D49B6F8-2275-4296-818C-828C74B40EE7} = {99E1B88D-BFE8-4686-BDFD-DC9057573545}
 	EndGlobalSection
 EndGlobal

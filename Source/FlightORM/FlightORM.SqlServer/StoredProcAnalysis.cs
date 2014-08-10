@@ -12,42 +12,71 @@ namespace FlightORM.SqlServer
 	public class StoredProcAnalysis
 	{
 		string _connectionString;
+		//bool _rollbackTestCalls;
 
 		public StoredProcAnalysis(string connectionString)
 		{
 			 _connectionString = connectionString;
+
 		}
 
+		/// <summary>
+		///	Lists all stored procedures available for the given database
+		///	IMPORTANT: this does not load ancillary information such as parameters and return structure
+		/// </summary>
+		/// <returns>All stored procedures for given connection</returns>
 		public IEnumerable<StoredProcedure> GetProcedures()
 		{
 			using (var cnn = new SqlConnection(_connectionString))
 			{
 				cnn.Open();
-				var cmd = new SqlCommand("select routine_schema, specific_name, specific_catalog, created, last_altered from information_schema.routines where routine_type = 'PROCEDURE'", cnn);
+				var cmd = new SqlCommand(@"
+				select sp.object_id as ID, sc.name as 'Schema', sp.name as Name, sp.create_date as Created, sp.modify_date as Modified from sys.objects sp 
+				left join sys.schemas sc on sc.schema_id = sp.schema_id
+				where sp.type = 'P'", cnn);
 				cmd.CommandType = CommandType.Text;
 				var reader = cmd.ExecuteReader();
-
-				var schema_index = reader.GetOrdinal("routine_schema");
-				var name_index = reader.GetOrdinal("specific_name");
-				var catalog_index = reader.GetOrdinal("specific_catalog");
-				var created_index = reader.GetOrdinal("created");
-				var modified_index = reader.GetOrdinal("created");
+				var index = reader.GetColumnLookup();
 
 				foreach (var r in reader)
 				{
 					var sp = new StoredProcedure
 					{
-						Name = reader.GetString(name_index),
-						Schema = reader.GetString(schema_index),
-						DateCreated = reader.GetDateTime(created_index),
-						DateModified = reader.GetDateTime(modified_index),
-						Catalog = reader.GetString(catalog_index)
+						Id = reader.GetInt32(index["ID"]),
+						Name = reader.GetString(index["Name"]),
+						Schema = reader.GetString(index["Schema"]),
+						DateCreated = reader.GetDateTime(index["Created"]),
+						DateModified = reader.GetDateTime(index["Modified"])
 					};
 					yield return sp;
 				}
 			}
 		}
 
-		//public IEnumerable<StoredProcedureDetail> GetProcedure
+
+		//public void LoadParameters(StoredProcedure procedure)
+		//{
+		
+
+		//}
+
+		//public void LoadParameters(List<StoredProcedure> procedures)
+		//{
+		
+
+		//}
+
+		//private IEnumerable<SPParameter> getParameters(SqlDataReader reader)
+		//{
+		//	var cols = reader.GetColumnLookup();
+		//	foreach (var r in reader)
+		//	{
+		//		var param = new SPParameter{
+		//			Name = 
+
+		//		}
+		//	}
+
+		//}
 	}
 }

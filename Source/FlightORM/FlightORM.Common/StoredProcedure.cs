@@ -8,14 +8,12 @@ namespace FlightORM.Common
 {
 	public class StoredProcedure
 	{
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Schema { get; set;}
-		public string Catalog { get; set;}
 		public DateTime DateCreated {get;set;}
 		public DateTime DateModified {get;set;}
-
 		public List<SPParameter> InputParameters {get; set;}
-
-
+		public List<QueryOutput> OutputData { get; set;}
 	}
 }
