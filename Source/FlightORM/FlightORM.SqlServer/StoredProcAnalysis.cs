@@ -74,11 +74,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		//public void LoadParameters(List<StoredProcedure> procedures)
-		//{
-				//TODO: Enable bulk load
 
-		//}
 
 		private IEnumerable<Tuple<int, SPParameter>> getParameters(SqlDataReader reader)
 		{
@@ -104,7 +100,39 @@ namespace FlightORM.SqlServer
 
 				yield return Tuple.Create(procId, param);
 			}
-
 		}
+
+		public void LoadOutputSchema(StoredProcedure procedure, SqlCommand SampleCommand, bool useRollback = true)
+		{
+			//todo: remove transactions if useRollback is false
+			using(var con = new SqlConnection(_connectionString))
+			{
+				//var trans = SqlTransaction
+
+				//SampleCommand.Transaction = trans;
+				SampleCommand.Connection = con;
+				con.Open();
+
+				var reader = SampleCommand.ExecuteReader();
+				//TODO: Handle errors and invalidate procedure
+				procedure.OutputData = new List<ResultSchema>();
+
+				var resultIndex = 0;
+				do
+				{
+					var result = new ResultSchema() { ResultIndex = resultIndex };
+
+					for (int c = 0; c < reader.FieldCount;c++)
+					{
+						result.Columns.Add(new ResultColumn{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
+					}
+
+					procedure.OutputData.Add(result);
+				}
+				while(reader.NextResult());
+				//trans.Rollback();
+			}
+		}
+
 	}
 }

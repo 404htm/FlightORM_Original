@@ -14,6 +14,6 @@ namespace FlightORM.Common
 		public DateTime DateCreated {get;set;}
 		public DateTime DateModified {get;set;}
 		public List<SPParameter> InputParameters {get; set;}
-		public List<QueryOutput> OutputData { get; set;}
+		public List<ResultSchema> OutputData { get; set;}
 	}
 }

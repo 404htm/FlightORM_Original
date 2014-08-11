@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigBase.cs" />
-    <Compile Include="QueryOutput.cs" />
+    <Compile Include="ResultColumn.cs" />
+    <Compile Include="ResultSchema.cs" />
     <Compile Include="SPParameter.cs" />
     <Compile Include="StoredProcedure.cs" />
     <Compile Include="DbTypeInfo.cs" />
