@@ -15,5 +15,8 @@ namespace FlightORM.Common
 		public DateTime DateModified {get;set;}
 		public List<SPParameter> InputParameters {get; set;}
 		public List<ResultSchema> OutputData { get; set;}
+
+		public bool? IsValid { get; set; }
+		public string Error { get; set; }
 	}
 }

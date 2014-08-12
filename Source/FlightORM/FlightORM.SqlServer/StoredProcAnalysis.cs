@@ -108,15 +108,28 @@ namespace FlightORM.SqlServer
 			using(var con = new SqlConnection(_connectionString))
 			{
 				SqlTransaction testTransaction = null;
+				SqlDataReader reader;
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
 				SampleCommand.Connection = con;
 				SampleCommand.Transaction = testTransaction;
 
-				var reader = SampleCommand.ExecuteReader();
-				//TODO: Handle errors and invalidate procedure
+				try
+				{
+					reader = SampleCommand.ExecuteReader();
+					procedure.IsValid = true;
+					procedure.Error = null;
+				}
+				catch(SqlException ex)
+				{
+					procedure.IsValid = false;
+					procedure.Error = ex.Message;
+					return;
+				}
+				
 				procedure.OutputData = new List<ResultSchema>();
+
 
 				var resultIndex = 0;
 				do
@@ -137,5 +150,35 @@ namespace FlightORM.SqlServer
 			}
 		}
 
+		public void ValidateProcedure(StoredProcedure procedure, SqlCommand SampleCommand, bool useRollback = true)
+		{
+			//todo: remove transactions if useRollback is false
+			using (var con = new SqlConnection(_connectionString))
+			{
+				SqlTransaction testTransaction = null;
+				SqlDataReader reader;
+
+				con.Open();
+				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
+				SampleCommand.Connection = con;
+				SampleCommand.Transaction = testTransaction;
+
+				try
+				{
+					reader = SampleCommand.ExecuteReader();
+					procedure.IsValid = true;
+					procedure.Error = null;
+				}
+				catch (SqlException ex)
+				{
+					procedure.IsValid = false;
+					procedure.Error = ex.Message;
+					return;
+				}
+
+				reader.Close();
+				if (useRollback) testTransaction.Rollback();
+			}
+		}
 	}
 }
