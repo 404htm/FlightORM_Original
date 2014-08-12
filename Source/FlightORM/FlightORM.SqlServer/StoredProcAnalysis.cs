@@ -107,11 +107,12 @@ namespace FlightORM.SqlServer
 			//todo: remove transactions if useRollback is false
 			using(var con = new SqlConnection(_connectionString))
 			{
-				//var trans = SqlTransaction
+				SqlTransaction testTransaction = null;
 
-				//SampleCommand.Transaction = trans;
-				SampleCommand.Connection = con;
 				con.Open();
+				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
+				SampleCommand.Connection = con;
+				SampleCommand.Transaction = testTransaction;
 
 				var reader = SampleCommand.ExecuteReader();
 				//TODO: Handle errors and invalidate procedure
@@ -130,7 +131,9 @@ namespace FlightORM.SqlServer
 					procedure.OutputData.Add(result);
 				}
 				while(reader.NextResult());
-				//trans.Rollback();
+
+				reader.Close();
+				if (useRollback) testTransaction.Rollback();
 			}
 		}
 
