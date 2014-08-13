@@ -14,11 +14,16 @@ namespace FlightORM.Core.Config
 		public StoredProcMapping(StoredProcedure definition)
 		{
 			Definiton = definition;
-			FriendlyName = definition.Name.Replace("sp_", "");
+			//TODO: Word Splitting Logic
+			FriendlyName = definition.Name.Replace("sp_", "").Replace("_"," ");
+			Enabled = true;
 		}
 
 		[DataMember]
 		public int ObjectID { get { return Definiton.Id; }}
+
+		[DataMember]
+		public bool Enabled { get; set;}
 
 		[DataMember]
 		public string FriendlyName { get; set;}

@@ -8,19 +8,38 @@
 	<Grid>
 		<GroupBox Header="StoredProcedure Manager" Margin="10,10,10,0" VerticalAlignment="Top" Height="179">
 			<Grid>
-				<ComboBox HorizontalAlignment="Left" Margin="100,18,0,0" VerticalAlignment="Top" Width="120"/>
-				<Grid>
+				<Grid >
 					<Label Content="GroupName" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top"/>
-					<ComboBox HorizontalAlignment="Left" Margin="100,18,0,0" VerticalAlignment="Top" Width="120"/>
 					<Label Content="Connection" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Margin="100,53,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.439,4.273"/>
+					<TextBox HorizontalAlignment="Left" Height="23" Margin="100,21,0,0" TextWrapping="Wrap" Text="AllProcedures" VerticalAlignment="Top" Width="120"/>
+					<Label Content="Type Map" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
+					<ComboBox HorizontalAlignment="Left" Margin="100,84,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.439,4.273"/>
+
 				</Grid>
-				<Button Content="Load Stored Procedures" HorizontalAlignment="Left" Margin="587,10,0,0" VerticalAlignment="Top" Width="171"/>
-				<Button Content="Check Procedures" HorizontalAlignment="Left" Margin="587,35,0,0" VerticalAlignment="Top" Width="171"/>
+				<Button Content="Load Stored Procedures" Margin="587,10,10,0" VerticalAlignment="Top"/>
+				<Button Content="Validate Procedures" Margin="587,35,10,0" VerticalAlignment="Top"/>
 			</Grid>
 
 		</GroupBox>
-		<DataGrid HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top" Height="396" Width="780"/>
+		<ScrollViewer Margin="10,194,10,10" >
+			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386">
+				<DataGrid.Columns>
+					<DataGridCheckBoxColumn Header="Enable" Binding="{Binding Enabled}"></DataGridCheckBoxColumn>
+					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Stored Procedure" Binding="{Binding Definition.Name}"></DataGridTextColumn>
+					<DataGridComboBoxColumn Header="InputType"></DataGridComboBoxColumn>
+					<DataGridComboBoxColumn Header="OutputType"></DataGridComboBoxColumn>
+					<DataGridTemplateColumn Header="Status"></DataGridTemplateColumn>
+				</DataGrid.Columns>
+				<DataGrid.RowDetailsTemplate>
+					<DataTemplate>
+
+					</DataTemplate>
+				</DataGrid.RowDetailsTemplate>
+			</DataGrid>
+		</ScrollViewer>
+
 
 	</Grid>
 </UserControl>

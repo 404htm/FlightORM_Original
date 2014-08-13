@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlightORM.Core.Config;
+using FlightORM.SqlServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,19 @@ namespace FlightORM.UI
 	/// </summary>
 	public partial class StoredProcManager : UserControl
 	{
-		public StoredProcManager()
+		public StoredProcManager(string cnnStr)
 		{
 			InitializeComponent();
+
+			//TODO: Replace terrible test code
+			//TODO: Remove dependency on SqlServerLib
+
+			var loader = new StoredProcAnalysis(cnnStr);
+			var procs = loader.GetProcedures();
+
+			var items = procs.Select(p => new StoredProcMapping(p)).ToList();
+
+			SPMappingGrid.ItemsSource =  items;
 		}
 	}
 }

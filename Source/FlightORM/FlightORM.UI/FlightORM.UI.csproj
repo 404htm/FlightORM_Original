@@ -82,6 +82,20 @@
   <ItemGroup>
     <Folder Include="Themes\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlightORM.Common\FlightORM.Common.csproj">
+      <Project>{0a662bf1-937a-4823-b44f-4bea15322f5c}</Project>
+      <Name>FlightORM.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlightORM.Core\FlightORM.Core.csproj">
+      <Project>{c6e3981d-3cbe-4e8c-877d-bfe7ea5c6278}</Project>
+      <Name>FlightORM.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlightORM.SqlServer\FlightORM.SqlServer.csproj">
+      <Project>{bf126864-d765-4f06-9223-5febfa32f0af}</Project>
+      <Name>FlightORM.SqlServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
