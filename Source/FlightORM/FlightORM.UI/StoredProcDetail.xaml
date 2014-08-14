@@ -6,8 +6,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 	<Grid>
-		<Label Content="Test" Margin="10,10,601,566"></Label>
-		<Label Content="{Binding Definition.Name}"  Margin="126,5,485,571"></Label>
-		<DataGrid ItemsSource="{Binding Definition.InputParameters}" AutoGenerateColumns="True" Height="129" VerticalAlignment="Bottom" Margin="0,0,0,437"></DataGrid>
+		<TabControl>
+			<TabItem Header="Parameters">
+				<DataGrid ItemsSource="{Binding Definition.InputParameters}" AutoGenerateColumns="True" Height="572" VerticalAlignment="Bottom" Margin="0,0,-6,0"/>
+			</TabItem>
+			<TabItem Header="Output">
+				<Grid Background="#FFE5E5E5"/>
+			</TabItem>
+			<TabItem Header="SampleQuery">
+				<Grid Background="#FFE5E5E5"/>
+			</TabItem>
+		</TabControl>
 	</Grid>
 </UserControl>
