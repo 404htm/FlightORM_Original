@@ -30,7 +30,8 @@ namespace FlightORM.UI
 			//TODO: Remove dependency on SqlServerLib
 
 			var loader = new StoredProcAnalysis(cnnStr);
-			var procs = loader.GetProcedures();
+			var procs = loader.GetProcedures().ToList();
+			foreach(var p in procs) loader.LoadParameters(p);
 
 			var items = procs.Select(p => new StoredProcMapping(p)).ToList();
 

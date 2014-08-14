@@ -24,7 +24,7 @@
 
 		</GroupBox>
 		<ScrollViewer Margin="10,194,10,10" >
-			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386" RowDetailsVisibilityMode="Collapsed">
+			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386" RowDetailsVisibilityMode="VisibleWhenSelected">
 				<DataGrid.Columns>
 					<DataGridCheckBoxColumn Header="Enable" Binding="{Binding Enabled}"></DataGridCheckBoxColumn>
 					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}" >
