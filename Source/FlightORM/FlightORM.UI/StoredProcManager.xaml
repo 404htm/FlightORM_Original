@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:controls="clr-namespace:FlightORM.UI"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 	<Grid>
@@ -23,18 +24,25 @@
 
 		</GroupBox>
 		<ScrollViewer Margin="10,194,10,10" >
-			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386">
+			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386" RowDetailsVisibilityMode="Collapsed">
 				<DataGrid.Columns>
 					<DataGridCheckBoxColumn Header="Enable" Binding="{Binding Enabled}"></DataGridCheckBoxColumn>
-					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}"></DataGridTextColumn>
-					<DataGridTextColumn Header="Stored Procedure" Binding="{Binding Definition.Name}"></DataGridTextColumn>
+					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}" >
+						<DataGridTextColumn.CellStyle>
+							<Style TargetType="DataGridCell">
+								<Setter Property="ToolTip" Value="{Binding ObjectId}" />
+							</Style>
+						</DataGridTextColumn.CellStyle>
+					</DataGridTextColumn>
+					<DataGridTextColumn Header="Stored Procedure" Binding="{Binding Path = Definition.Name}"></DataGridTextColumn>
 					<DataGridComboBoxColumn Header="InputType"></DataGridComboBoxColumn>
 					<DataGridComboBoxColumn Header="OutputType"></DataGridComboBoxColumn>
-					<DataGridTemplateColumn Header="Status"></DataGridTemplateColumn>
+					<DataGridTemplateColumn Header="Status">
+					</DataGridTemplateColumn>
 				</DataGrid.Columns>
 				<DataGrid.RowDetailsTemplate>
 					<DataTemplate>
-
+						<controls:StoredProcDetail DataContext="{Binding}"></controls:StoredProcDetail>
 					</DataTemplate>
 				</DataGrid.RowDetailsTemplate>
 			</DataGrid>

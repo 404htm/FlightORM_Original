@@ -13,14 +13,15 @@ namespace FlightORM.Core.Config
 	{
 		public StoredProcMapping(StoredProcedure definition)
 		{
-			Definiton = definition;
+			Definition = definition;
 			//TODO: Word Splitting Logic
 			FriendlyName = definition.Name.Replace("sp_", "").Replace("_"," ");
 			Enabled = true;
+			Definition = definition;
 		}
 
 		[DataMember]
-		public int ObjectID { get { return Definiton.Id; }}
+		public int ObjectId { get { return Definition.Id; }}
 
 		[DataMember]
 		public bool Enabled { get; set;}
@@ -39,7 +40,7 @@ namespace FlightORM.Core.Config
 		public string InputType { get; set; }
 
 		[DataMember]
-		public StoredProcedure Definiton { get; set; }
+		public StoredProcedure Definition { get; set; }
 
 		[DataMember]
 		public List<string> SystemFlags { get; set;}
