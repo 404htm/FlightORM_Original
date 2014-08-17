@@ -30,30 +30,35 @@
 
 		</GroupBox>
 		<ScrollViewer Margin="10,194,10,10" >
-			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" Height="386" ItemsSource="{Binding Mappings}">
+			<DataGrid Name="SPMappingGrid" AutoGenerateColumns="False" ItemsSource="{Binding Mappings}">
 				<DataGrid.Columns>
-					<DataGridCheckBoxColumn Header="Enable" Binding="{Binding Enabled}"></DataGridCheckBoxColumn>
+					<DataGridCheckBoxColumn Header="Enable" Binding="{Binding Enabled}">
+					
+					</DataGridCheckBoxColumn>
+					<DataGridTemplateColumn Header="Details">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Click="OpenDetailWindow" CommandParameter="{Binding}">
+									<Image Source="Icons/AddProperty_5538.png" />
+								</Button>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
 					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}" >
+
+					</DataGridTextColumn>
+					<DataGridTextColumn Header="Stored Procedure" IsReadOnly="True" Binding="{Binding Path = Definition.Name}">
 						<DataGridTextColumn.CellStyle>
 							<Style TargetType="DataGridCell">
 								<Setter Property="ToolTip" Value="{Binding ObjectId}" />
 							</Style>
 						</DataGridTextColumn.CellStyle>
 					</DataGridTextColumn>
-					<DataGridTextColumn Header="Stored Procedure" Binding="{Binding Path = Definition.Name}"></DataGridTextColumn>
 					<DataGridComboBoxColumn Header="InputType"></DataGridComboBoxColumn>
 					<DataGridComboBoxColumn Header="OutputType"></DataGridComboBoxColumn>
 					<DataGridTemplateColumn Header="Status">
 					</DataGridTemplateColumn>
-					<DataGridTemplateColumn Header="Details">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<Button Click="OpenDetailWindow" CommandParameter="{Binding}">
-								<Image Source="Icons/gear_16xLG.png" />
-								</Button>
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
+
 				</DataGrid.Columns>
 				<!--<DataGrid.RowDetailsTemplate>
 					<DataTemplate>
