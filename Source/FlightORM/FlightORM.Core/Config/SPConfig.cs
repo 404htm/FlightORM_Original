@@ -11,11 +11,15 @@ namespace FlightORM.Core.Config
 	[DataContract]
 	public class SPConfig 
 	{
+		public SPConfig()
+		{
+
+		}
 		public SPConfig(SPInfo definition)
 		{
 			Definition = definition;
 			//TODO: Word Splitting Logic
-			FriendlyName = definition.Name.Replace("sp_", "").Replace("_"," ");
+			FriendlyName = NamingHelpers.SplitObjectName(definition.Name);
 			Enabled = true;
 			Definition = definition;
 			Parameters = definition.InputParameters.Select(p => new SPParameterConfig(p)).ToList();

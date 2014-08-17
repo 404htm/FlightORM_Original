@@ -12,7 +12,13 @@ namespace FlightORM.Common
 		public int Position { get; set; }
 		public bool IsOutput { get; set; }
 		public bool IsReadOnly { get; set;}
+
+		
 		public bool HasDefault { get; set;}
 		public object DefaultValue { get; set;}
+
+		//TODO: Move display methods
+		public string Direction { get { return IsOutput?"In/Out":"In"; } }
+		public string DBDefault { get {  return HasDefault?DefaultValue.ToString():"-";} }
 	}
 }

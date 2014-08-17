@@ -89,6 +89,7 @@ namespace FlightORM.SqlServer
 				typeInfo.Precision = reader.GetByte(index["t.precision"]);
 				typeInfo.Scale = reader.GetByte(index["t.scale"]);
 
+		
 				var param = new SPParameter();
 				param.Name = reader.GetString(index["Name"]);
 				param.Position = reader.GetInt32(index["position"]);
@@ -104,7 +105,6 @@ namespace FlightORM.SqlServer
 
 		public void LoadOutputSchema(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
 		{
-			//todo: remove transactions if useRollback is false
 			using(var con = new SqlConnection(_connectionString))
 			{
 				SqlTransaction testTransaction = null;
@@ -129,7 +129,7 @@ namespace FlightORM.SqlServer
 				}
 				
 				procedure.OutputData = new List<SPResult>();
-
+				//DataTable schema = reader.GetSchemaTable();
 
 				var resultIndex = 0;
 				do
@@ -152,7 +152,6 @@ namespace FlightORM.SqlServer
 
 		public void ValidateProcedure(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
 		{
-			//todo: remove transactions if useRollback is false
 			using (var con = new SqlConnection(_connectionString))
 			{
 				SqlTransaction testTransaction = null;

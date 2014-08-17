@@ -18,7 +18,7 @@ namespace FlightORM.UI.Models
 		/// </summary>
 		public StoredProcsVM()
 		{
-			_cnn = @"Data Source=.\dev;Initial Catalog=AdventureWorks2012;Integrated Security=True";
+			_cnn = @"Data Source=.\dev;Initial Catalog=NORTHWND;Integrated Security=True";
 			Load();
 		}
 

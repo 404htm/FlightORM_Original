@@ -14,6 +14,9 @@ namespace FlightORM.Core.Config
 		public SPParameterConfig(SPParameter parameter)
 		{
 			Definition = parameter;
+			FriendlyName = NamingHelpers.SplitObjectName(Definition.Name);
+			IsRequired = !Definition.HasDefault;
+			Type=Definition.TypeInfo.TypeName;
 		}
 
 		[DataMember]
@@ -26,10 +29,10 @@ namespace FlightORM.Core.Config
 		public String Description { get; set; }
 
 		[DataMember]
-		public Boolean IsRequired { get; set;}
+		public bool IsRequired { get; set;}
 
 		[DataMember]
-		public Type Type { get; set;}
+		public string Type { get; set;}
 
 	}
 }

@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="FlightORM.UI.StoredProcParams"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+	<DataGrid ItemsSource="{Binding Path=Parameters}" AutoGenerateColumns="False"  >
+		<DataGrid.Columns>
+		
+			<DataGridTextColumn IsReadOnly="True" Header="Position" Binding="{Binding Path=Definition.Position}"></DataGridTextColumn>
+			<DataGridTextColumn IsReadOnly="True" Header="Parameter" Binding="{Binding Path=Definition.Name}"></DataGridTextColumn>
+			<DataGridTextColumn Header="Name" Binding="{Binding Path=FriendlyName}"></DataGridTextColumn>
+			<DataGridTextColumn Header="Direction" IsReadOnly="True" Binding="{Binding Path=Definition.Direction}"></DataGridTextColumn>
+			<DataGridTextColumn Header="Description" Width="Auto" Binding="{Binding Path=Definition.Description}"></DataGridTextColumn>
+			<DataGridTextColumn Header="DBDefault" IsReadOnly="True" Binding="{Binding Path=Definition.DBDefault}"></DataGridTextColumn>
+		</DataGrid.Columns>
+	</DataGrid>
+</UserControl>
