@@ -7,7 +7,7 @@
              d:DesignHeight="400" d:DesignWidth="600">
 	<DataGrid ItemsSource="{Binding Path=Parameters}" AutoGenerateColumns="False"  >
 		<DataGrid.Columns>
-		
+			<DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Path=Enabled}"></DataGridCheckBoxColumn>
 			<DataGridTextColumn IsReadOnly="True" Header="Position" Binding="{Binding Path=Definition.Position}"></DataGridTextColumn>
 			<DataGridTextColumn IsReadOnly="True" Header="Parameter" Binding="{Binding Path=Definition.Name}"></DataGridTextColumn>
 			<DataGridTextColumn Header="Name" Binding="{Binding Path=FriendlyName}"></DataGridTextColumn>

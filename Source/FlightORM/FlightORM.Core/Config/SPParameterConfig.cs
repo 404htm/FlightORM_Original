@@ -20,6 +20,9 @@ namespace FlightORM.Core.Config
 		}
 
 		[DataMember]
+		public bool Enable { get; set; }
+
+		[DataMember]
 		public SPParameter Definition {get; set;}
 
 		[DataMember]
