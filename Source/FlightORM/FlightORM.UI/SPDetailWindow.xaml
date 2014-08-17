@@ -1,0 +1,7 @@
+﻿<Window x:Class="FlightORM.UI.SPDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:controls="clr-namespace:FlightORM.UI"
+        Title="SPDetailWindow" Height="300" Width="300">
+	<controls:StoredProcDetail DataContext="{Binding}"></controls:StoredProcDetail>
+</Window>

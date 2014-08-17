@@ -1,5 +1,6 @@
 ﻿using FlightORM.Core.Config;
 using FlightORM.SqlServer;
+using FlightORM.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,20 +23,32 @@ namespace FlightORM.UI
 	/// </summary>
 	public partial class StoredProcManager : UserControl
 	{
+
+		
+
+		public StoredProcManager()
+		{
+			
+		}
+
 		public StoredProcManager(string cnnStr)
 		{
 			InitializeComponent();
-
-			//TODO: Replace terrible test code
-			//TODO: Remove dependency on SqlServerLib
-
-			var loader = new StoredProcAnalysis(cnnStr);
-			var procs = loader.GetProcedures().ToList();
-			foreach(var p in procs) loader.LoadParameters(p);
-
-			var items = procs.Select(p => new StoredProcMapping(p)).ToList();
-
-			SPMappingGrid.ItemsSource =  items;
+			var vm = new StoredProcsVM(cnnStr);
+			vm.Load();
+			this.DataContext = vm;
 		}
+
+		private void OpenDetailWindow(object sender, RoutedEventArgs e)
+		{
+			var win = new SPDetailWindow();
+			win.DataContext = ((FrameworkElement)sender).DataContext;
+			win.Show();
+			e.Handled = true;
+		}
+
+
 	}
+
+
 }

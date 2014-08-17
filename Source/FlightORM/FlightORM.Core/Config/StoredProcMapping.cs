@@ -11,6 +11,12 @@ namespace FlightORM.Core.Config
 	[DataContract]
 	public class StoredProcMapping : ConfigBase<StoredProcMapping>
 	{
+
+		public StoredProcMapping()
+		{
+
+		}
+
 		public StoredProcMapping(StoredProcedure definition)
 		{
 			Definition = definition;
