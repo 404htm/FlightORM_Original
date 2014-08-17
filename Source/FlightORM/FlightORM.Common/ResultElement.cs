@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FlightORM.Common
 {
-	public class ResultColumn
+	public class ResultElement
 	{
 		public Type Type { get; set;}
 		public string Name { get; set; }

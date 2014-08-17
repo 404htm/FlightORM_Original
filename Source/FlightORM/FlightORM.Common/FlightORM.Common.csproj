@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigBase.cs" />
-    <Compile Include="ResultColumn.cs" />
-    <Compile Include="ResultSchema.cs" />
+    <Compile Include="ResultElement.cs" />
+    <Compile Include="SPResult.cs" />
     <Compile Include="SPParameter.cs" />
-    <Compile Include="StoredProcedure.cs" />
+    <Compile Include="SPInfo.cs" />
     <Compile Include="DbTypeInfo.cs" />
     <Compile Include="TypeMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

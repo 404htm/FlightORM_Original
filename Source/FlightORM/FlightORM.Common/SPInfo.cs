@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FlightORM.Common
 {
-	public class StoredProcedure
+	public class SPInfo
 	{
-		public StoredProcedure()
+		public SPInfo()
 		{
 
 		}
@@ -18,7 +18,7 @@ namespace FlightORM.Common
 		public DateTime DateCreated {get;set;}
 		public DateTime DateModified {get;set;}
 		public List<SPParameter> InputParameters {get; set;}
-		public List<ResultSchema> OutputData { get; set;}
+		public List<SPResult> OutputData { get; set;}
 
 		public bool? IsValid { get; set; }
 		public string Error { get; set; }

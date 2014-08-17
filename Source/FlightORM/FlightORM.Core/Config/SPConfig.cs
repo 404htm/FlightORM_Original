@@ -11,7 +11,7 @@ namespace FlightORM.Core.Config
 	[DataContract]
 	public class SPConfig 
 	{
-		public SPConfig(StoredProcedure definition)
+		public SPConfig(SPInfo definition)
 		{
 			Definition = definition;
 			//TODO: Word Splitting Logic
@@ -40,7 +40,7 @@ namespace FlightORM.Core.Config
 		public string InputType { get; set; }
 
 		[DataMember]
-		public StoredProcedure Definition { get; set; }
+		public SPInfo Definition { get; set; }
 
 		[DataMember]
 		public List<string> SystemFlags { get; set;}

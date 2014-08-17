@@ -25,7 +25,7 @@ namespace FlightORM.SqlServer
 		///	IMPORTANT: this does not load ancillary information such as parameters and return structure
 		/// </summary>
 		/// <returns>All stored procedures for given connection</returns>
-		public IEnumerable<StoredProcedure> GetProcedures()
+		public IEnumerable<SPInfo> GetProcedures()
 		{
 			using (var cnn = new SqlConnection(_connectionString))
 			{
@@ -40,7 +40,7 @@ namespace FlightORM.SqlServer
 
 				foreach (var r in reader)
 				{
-					var sp = new StoredProcedure
+					var sp = new SPInfo
 					{
 						Id = reader.GetInt32(index["ID"]),
 						Name = reader.GetString(index["Name"]),
@@ -54,7 +54,7 @@ namespace FlightORM.SqlServer
 		}
 
 
-		public void LoadParameters(StoredProcedure procedure)
+		public void LoadParameters(SPInfo procedure)
 		{
 			var query = @"select p.name as Name, p.object_id as ProcedureId, p.parameter_id as 'position', t.name as 't.name', 
 							p.is_output as 'output', p.max_length as 't.maxLen', p.precision as 't.precision', 
@@ -102,7 +102,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void LoadOutputSchema(StoredProcedure procedure, SqlCommand SampleCommand, bool useRollback = true)
+		public void LoadOutputSchema(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
 		{
 			//todo: remove transactions if useRollback is false
 			using(var con = new SqlConnection(_connectionString))
@@ -128,17 +128,17 @@ namespace FlightORM.SqlServer
 					return;
 				}
 				
-				procedure.OutputData = new List<ResultSchema>();
+				procedure.OutputData = new List<SPResult>();
 
 
 				var resultIndex = 0;
 				do
 				{
-					var result = new ResultSchema() { ResultIndex = resultIndex };
+					var result = new SPResult() { ResultIndex = resultIndex };
 
 					for (int c = 0; c < reader.FieldCount;c++)
 					{
-						result.Columns.Add(new ResultColumn{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
+						result.Columns.Add(new ResultElement{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
 					}
 
 					procedure.OutputData.Add(result);
@@ -150,7 +150,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void ValidateProcedure(StoredProcedure procedure, SqlCommand SampleCommand, bool useRollback = true)
+		public void ValidateProcedure(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
 		{
 			//todo: remove transactions if useRollback is false
 			using (var con = new SqlConnection(_connectionString))

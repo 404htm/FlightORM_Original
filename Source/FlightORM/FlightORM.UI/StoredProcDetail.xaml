@@ -10,7 +10,7 @@
 			<TabItem Header="General">
 			</TabItem>
 			<TabItem Header="Parameters">
-				<DataGrid ItemsSource="{Binding Definition.InputParameters}" AutoGenerateColumns="True" VerticalAlignment="Bottom" Margin="0,0,-6,0"/>
+				<DataGrid ItemsSource="{Binding Definition.InputParameters}" AutoGenerateColumns="True" Margin="0,0,0,0"/>
 			</TabItem>
 			<TabItem Header="Output">
 				<Grid Background="#FFE5E5E5"/>
