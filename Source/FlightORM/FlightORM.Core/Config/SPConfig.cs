@@ -18,6 +18,7 @@ namespace FlightORM.Core.Config
 			FriendlyName = definition.Name.Replace("sp_", "").Replace("_"," ");
 			Enabled = true;
 			Definition = definition;
+			Parameters = definition.InputParameters.Select(p => new SPParameterConfig(p)).ToList();
 		}
 
 		[DataMember]
@@ -43,9 +44,12 @@ namespace FlightORM.Core.Config
 		public SPInfo Definition { get; set; }
 
 		[DataMember]
-		public List<string> SystemFlags { get; set;}
+		public IList<string> SystemFlags { get; set;}
 
 		[DataMember]
-		public List<string> UserFlags { get; set; }
+		public IList<string> UserFlags { get; set; }
+
+		[DataMember]
+		public IList<SPParameterConfig> Parameters { get; set; }
 	}
 }
