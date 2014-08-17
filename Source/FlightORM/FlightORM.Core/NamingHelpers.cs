@@ -16,6 +16,7 @@ namespace FlightORM.Core
 		public static string SplitObjectName(string name)
 		{
 			//TODO: Complete logic - this is just a stub
+			name = name.Replace("@","");
 			if(name.Contains('_')) return name.Replace('_',' ');
 			return name;
 

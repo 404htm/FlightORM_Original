@@ -44,10 +44,10 @@
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
-					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}" >
+					<DataGridTextColumn Header="Name" Binding="{Binding FriendlyName}" Width=".5*">
 
 					</DataGridTextColumn>
-					<DataGridTextColumn Header="Stored Procedure" IsReadOnly="True" Binding="{Binding Path = Definition.Name}">
+					<DataGridTextColumn Width=".5*" Header="Stored Procedure" IsReadOnly="True" Binding="{Binding Path = Definition.Name}">
 						<DataGridTextColumn.CellStyle>
 							<Style TargetType="DataGridCell">
 								<Setter Property="ToolTip" Value="{Binding ObjectId}" />

@@ -12,8 +12,12 @@
 			<DataGridTextColumn IsReadOnly="True" Header="Parameter" Binding="{Binding Path=Definition.Name}"></DataGridTextColumn>
 			<DataGridTextColumn Header="Name" Binding="{Binding Path=FriendlyName}"></DataGridTextColumn>
 			<DataGridTextColumn Header="Direction" IsReadOnly="True" Binding="{Binding Path=Definition.Direction}"></DataGridTextColumn>
-			<DataGridTextColumn Header="Description" Width="Auto" Binding="{Binding Path=Definition.Description}"></DataGridTextColumn>
+			<DataGridComboBoxColumn Header="Type" SelectedValueBinding="{Binding Path=Definition.Type}"></DataGridComboBoxColumn>
+			<DataGridCheckBoxColumn Header="Required" Binding="{Binding Path=IsRequired}"></DataGridCheckBoxColumn>
 			<DataGridTextColumn Header="DBDefault" IsReadOnly="True" Binding="{Binding Path=Definition.DBDefault}"></DataGridTextColumn>
+			<DataGridTextColumn Header="Description" Width="*" Binding="{Binding Path=Definition.Description}"></DataGridTextColumn>
+
+			
 		</DataGrid.Columns>
 	</DataGrid>
 </UserControl>
