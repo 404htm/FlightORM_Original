@@ -47,19 +47,35 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="SPDetailWindow.xaml">
+    <Page Include="StoredProcedure\DetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StoredProcDetail.xaml">
+    <Page Include="StoredProcedure\DetailMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StoredProcManager.xaml">
+    <Page Include="StoredProcedure\General.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StoredProcParams.xaml">
+    <Page Include="StoredProcedure\GroupSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StoredProcedure\Outputs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StoredProcedure\Params.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StoredProcedure\SampleQuery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StoredProcedure\TestResults.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -80,17 +96,29 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SPDetailWindow.xaml.cs">
-      <DependentUpon>SPDetailWindow.xaml</DependentUpon>
+    <Compile Include="StoredProcedure\DetailWindow.xaml.cs">
+      <DependentUpon>DetailWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StoredProcDetail.xaml.cs">
-      <DependentUpon>StoredProcDetail.xaml</DependentUpon>
+    <Compile Include="StoredProcedure\DetailMain.xaml.cs">
+      <DependentUpon>DetailMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StoredProcManager.xaml.cs">
-      <DependentUpon>StoredProcManager.xaml</DependentUpon>
+    <Compile Include="StoredProcedure\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StoredProcParams.xaml.cs">
-      <DependentUpon>StoredProcParams.xaml</DependentUpon>
+    <Compile Include="StoredProcedure\GroupSettings.xaml.cs">
+      <DependentUpon>GroupSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StoredProcedure\Outputs.xaml.cs">
+      <DependentUpon>Outputs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StoredProcedure\Params.xaml.cs">
+      <DependentUpon>Params.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StoredProcedure\SampleQuery.xaml.cs">
+      <DependentUpon>SampleQuery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StoredProcedure\TestResults.xaml.cs">
+      <DependentUpon>TestResults.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="FlightORM.UI.StoredProcManager"
+﻿<UserControl x:Class="FlightORM.UI.StoredProcedure.GroupSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:flight="clr-namespace:FlightORM.UI"
+			 xmlns:sp="clr-namespace:FlightORM.UI.StoredProcedure"
 			 xmlns:vm="clr-namespace:FlightORM.UI.Models"
              mc:Ignorable="d" 
              d:DesignHeight="600" 
@@ -39,7 +39,7 @@
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
 								<Button Click="OpenDetailWindow" CommandParameter="{Binding}">
-									<Image Source="Icons/AddProperty_5538.png" />
+									<Image Source="/FlightORM.UI;component/Icons/AddProperty_5538.png" />
 								</Button>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>

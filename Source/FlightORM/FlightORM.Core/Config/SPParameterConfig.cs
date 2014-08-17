@@ -17,10 +17,12 @@ namespace FlightORM.Core.Config
 			FriendlyName = NamingHelpers.SplitObjectName(Definition.Name);
 			IsRequired = !Definition.HasDefault;
 			Type=Definition.TypeInfo.TypeName;
+			Enabled = true;
 		}
 
 		[DataMember]
-		public bool Enable { get; set; }
+		public bool Enabled { get; set; }
+
 
 		[DataMember]
 		public SPParameter Definition {get; set;}

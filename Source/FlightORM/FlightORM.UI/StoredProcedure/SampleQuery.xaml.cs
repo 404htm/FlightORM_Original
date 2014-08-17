@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightORM.UI
+namespace FlightORM.UI.StoredProcedure
 {
 	/// <summary>
-	/// Interaction logic for StoredProcDetail.xaml
+	/// Interaction logic for StoredProcSampleQuery.xaml
 	/// </summary>
-	public partial class StoredProcDetail : UserControl
+	public partial class SampleQuery : UserControl
 	{
-		public StoredProcDetail()
+		public SampleQuery()
 		{
 			InitializeComponent();
 		}

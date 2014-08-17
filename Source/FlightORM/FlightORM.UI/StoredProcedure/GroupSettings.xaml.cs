@@ -16,24 +16,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightORM.UI
+namespace FlightORM.UI.StoredProcedure
 {
 	/// <summary>
 	/// Interaction logic for StoredProcManager.xaml
 	/// </summary>
-	public partial class StoredProcManager : UserControl
+	public partial class GroupSettings : UserControl
 	{
 
 		
 
-		public StoredProcManager()
+		public GroupSettings()
 		{
 			InitializeComponent();
 			var vm = new StoredProcsVM();
 			this.DataContext = vm;
 		}
 
-		public StoredProcManager(string cnnStr)
+		public GroupSettings(string cnnStr)
 		{
 			InitializeComponent();
 			var vm = new StoredProcsVM(cnnStr);
@@ -43,7 +43,7 @@ namespace FlightORM.UI
 
 		private void OpenDetailWindow(object sender, RoutedEventArgs e)
 		{
-			var win = new SPDetailWindow();
+			var win = new DetailWindow();
 			win.DataContext = ((FrameworkElement)sender).DataContext;
 			win.Show();
 			e.Handled = true;
