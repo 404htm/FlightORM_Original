@@ -9,15 +9,9 @@ using System.Threading.Tasks;
 namespace FlightORM.Core.Config
 {
 	[DataContract]
-	public class StoredProcMapping : ConfigBase<StoredProcMapping>
+	public class SPConfig 
 	{
-
-		public StoredProcMapping()
-		{
-
-		}
-
-		public StoredProcMapping(StoredProcedure definition)
+		public SPConfig(StoredProcedure definition)
 		{
 			Definition = definition;
 			//TODO: Word Splitting Logic

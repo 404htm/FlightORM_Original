@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace FlightORM.Core.Config
 {
 	[DataContract]
-	public class StoredProcSet : ConfigBase<StoredProcSet>
+	public class SPGroupConfig : ConfigBase<SPGroupConfig>
 	{
 		[DataMember]
 		public string Name { get; set;}
 
 		[DataMember]
-		public List<StoredProcMapping> Procedures { get; set; }
+		public List<SPConfig> Procedures { get; set; }
 
 		[DataMember]
 		public string ConnectionName { get; set;}
