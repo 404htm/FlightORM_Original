@@ -28,7 +28,9 @@ namespace FlightORM.UI
 
 		public StoredProcManager()
 		{
-			
+			InitializeComponent();
+			var vm = new StoredProcsVM();
+			this.DataContext = vm;
 		}
 
 		public StoredProcManager(string cnnStr)

@@ -1,0 +1,7 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:UI="clr-namespace:FlightORM.UI;assembly=FlightORM.UI" x:Class="FlightORM.MainWindow"
+        Title="Flight ORM" Height="600" Width="800">
+	<UI:StoredProcManager Margin="0,0,0,0"/>
+</Window>

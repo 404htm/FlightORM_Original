@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.SqlServerTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM.UI", "FlightORM.UI\FlightORM.UI.csproj", "{F833CA54-5648-435D-8F1A-F338BD9CF379}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightORM", "FlightORM\FlightORM.csproj", "{114D54C7-1C1F-451D-BAB2-445DB7A5503C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{F833CA54-5648-435D-8F1A-F338BD9CF379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F833CA54-5648-435D-8F1A-F338BD9CF379}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F833CA54-5648-435D-8F1A-F338BD9CF379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{114D54C7-1C1F-451D-BAB2-445DB7A5503C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114D54C7-1C1F-451D-BAB2-445DB7A5503C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114D54C7-1C1F-451D-BAB2-445DB7A5503C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114D54C7-1C1F-451D-BAB2-445DB7A5503C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
