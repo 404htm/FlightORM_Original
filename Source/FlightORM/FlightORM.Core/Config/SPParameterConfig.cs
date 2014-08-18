@@ -17,6 +17,7 @@ namespace FlightORM.Core.Config
 			FriendlyName = NamingHelpers.SplitObjectName(Definition.Name);
 			IsRequired = !Definition.HasDefault;
 			Type=Definition.TypeInfo.TypeName;
+			SampleValue = Definition.DefaultValue as String;
 			Enabled = true;
 		}
 
@@ -39,5 +40,7 @@ namespace FlightORM.Core.Config
 		[DataMember]
 		public string Type { get; set;}
 
+		[DataMember]
+		public string SampleValue { get; set;}
 	}
 }

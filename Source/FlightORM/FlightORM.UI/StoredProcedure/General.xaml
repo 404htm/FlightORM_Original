@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="400" d:DesignWidth="600">
+	<Grid>
+		<Label Content="Procedure Name" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="-9.536,-1.304" Width="113" Height="23"/>
+		<TextBox HorizontalAlignment="Left" Height="23" Margin="123,13,0,0" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=Definition.Name}" VerticalAlignment="Top" Width="177"/>
+		<Label Content="Friendly Name" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="-9.536,-1.304" Width="113" Height="23"/>
+		<TextBox HorizontalAlignment="Left" Height="23" Margin="123,41,0,0" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FriendlyName}" VerticalAlignment="Top" Width="177"/>
+
+	</Grid>
 </UserControl>

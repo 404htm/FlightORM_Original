@@ -4,8 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="400" d:DesignWidth="600">
+	<Grid>
+		<TextBlock Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40">
+		Please provide sample values for the following stored procedure.
+		This is used to validate the procedure and get the shape of the returned data.
+		The result of this operation will be rolled back to prevent unexpected changes to data.
+		</TextBlock>
+		<DataGrid Margin="0,55,0,35" ItemsSource="{Binding Parameters}" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn IsReadOnly="True" Binding="{Binding Definition.Name}" Header="ParameterName"></DataGridTextColumn>
+				<DataGridTextColumn IsReadOnly="True" Binding="{Binding Definition.Type.Name}" Header="DBType"></DataGridTextColumn>
+				<DataGridTextColumn Binding="{Binding SampleVallue}" Header="Value"></DataGridTextColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button Content="Test" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+
+	</Grid>
 </UserControl>

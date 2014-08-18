@@ -15,11 +15,11 @@
 			<TabItem Header="Parameters">
 				<sp:Params DataContext="{Binding}"></sp:Params>
 			</TabItem>
-			<TabItem Header="Output">
-				<sp:Outputs DataContext="{Binding}"></sp:Outputs>
-			</TabItem>
 			<TabItem Header="SampleQuery">
 				<sp:SampleQuery DataContext="{Binding}"></sp:SampleQuery>
+			</TabItem>
+			<TabItem Header="Output" IsEnabled="{Binding }">
+				<sp:Outputs DataContext="{Binding}"></sp:Outputs>
 			</TabItem>
 			<TabItem Header="Results" IsEnabled="False">
 				<sp:TestResults DataContext="{Binding}"></sp:TestResults>
