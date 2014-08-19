@@ -29,14 +29,14 @@ namespace FlightORM.UI.StoredProcedure
 		public GroupSettings()
 		{
 			InitializeComponent();
-			var vm = new StoredProcsVM();
+			var vm = new StoredProcGroupVM();
 			this.DataContext = vm;
 		}
 
 		public GroupSettings(string cnnStr)
 		{
 			InitializeComponent();
-			var vm = new StoredProcsVM(cnnStr);
+			var vm = new StoredProcGroupVM(cnnStr);
 			vm.Load();
 			this.DataContext = vm;
 		}

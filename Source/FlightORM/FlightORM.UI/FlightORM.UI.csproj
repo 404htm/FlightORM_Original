@@ -82,7 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesignerData.cs" />
-    <Compile Include="Models\StoredProcsVM.cs" />
+    <Compile Include="Models\StoredProcGroupVM.cs" />
+    <Compile Include="Models\StoredProcVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

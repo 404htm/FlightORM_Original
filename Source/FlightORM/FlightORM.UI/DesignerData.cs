@@ -10,13 +10,13 @@ namespace FlightORM.UI
 	public static class DesignerData
 	{
 
-		static StoredProcsVM _vm;
-		public static StoredProcsVM StoredProcsVM
+		static StoredProcGroupVM _vm;
+		public static StoredProcGroupVM StoredProcsVM
 		{
 			get {  
 				if (_vm == null)
 				{
-					_vm = new StoredProcsVM(@"Data Source=.\dev;Initial Catalog=AdventureWorks2012;Integrated Security=True");
+					_vm = new StoredProcGroupVM(@"Data Source=.\dev;Initial Catalog=AdventureWorks2012;Integrated Security=True");
 					_vm.Load();
 				}
 				return _vm;

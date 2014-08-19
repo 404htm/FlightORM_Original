@@ -18,7 +18,6 @@ namespace FlightORM.Core.Config
 		public SPConfig(SPInfo definition)
 		{
 			Definition = definition;
-			//TODO: Word Splitting Logic
 			FriendlyName = NamingHelpers.SplitObjectName(definition.Name);
 			Enabled = true;
 			Definition = definition;

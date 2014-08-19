@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FlightORM.SqlServer
 {
-	public class StoredProcAnalysis
+	public class StoredProcAnalysis : IStoredProcAnalyzer
 	{
 		string _connectionString;
 		//bool _rollbackTestCalls;

@@ -24,5 +24,10 @@ namespace FlightORM.UI.StoredProcedure
 		{
 			InitializeComponent();
 		}
+
+		private void TestQuery(object sender, RoutedEventArgs e)
+		{
+			//var this.Parent.
+		}
 	}
 }

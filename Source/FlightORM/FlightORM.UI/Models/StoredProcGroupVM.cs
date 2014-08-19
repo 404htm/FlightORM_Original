@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace FlightORM.UI.Models
 {
-	public class StoredProcsVM
+	public class StoredProcGroupVM
 	{
 		string _cnn;
 
 		/// <summary>
 		/// Designer Constructor
 		/// </summary>
-		public StoredProcsVM()
+		public StoredProcGroupVM()
 		{
 			_cnn = @"Data Source=.\dev;Initial Catalog=NORTHWND;Integrated Security=True";
 			Load();
 		}
 
-		public StoredProcsVM(string connectionString)
+		public StoredProcGroupVM(string connectionString)
 		{
 			_cnn=connectionString;
 			
