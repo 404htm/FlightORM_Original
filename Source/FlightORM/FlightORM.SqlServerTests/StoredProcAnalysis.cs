@@ -5,6 +5,7 @@ using FlightORM.SqlServer;
 using System.Linq;
 using FlightORM.SqlServerTests.Properties;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace FlightORM.SqlServerTests
 {
@@ -58,11 +59,15 @@ namespace FlightORM.SqlServerTests
 			var spa = new StoredProcAnalysis(Settings.Default.AdventureWorks);
 			var proc = spa.GetProcedures().Where(p => p.Name == "uspGetBillOfMaterials").Single();
 
-			var cmd = new SqlCommand("uspGetBillOfMaterials");
-			cmd.CommandType = System.Data.CommandType.StoredProcedure;
-			cmd.Parameters.Add(new SqlParameter("@StartProductID", 893));
-			cmd.Parameters.Add(new SqlParameter("@CheckDate", new DateTime(2004, 4, 18)));
-			spa.LoadOutputSchema(proc, cmd);
+			//var cmd = new SqlCommand("uspGetBillOfMaterials");
+			//cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+			var paramList = new Dictionary<string, string>();
+			paramList.Add("@StartProductID", "893");
+			paramList.Add("@CheckDate", "4/18/2004");
+			//cmd.Parameters.Add(new SqlParameter("@StartProductID", 893));
+			//cmd.Parameters.Add(new SqlParameter("@CheckDate", new DateTime(2004, 4, 18)));
+			spa.LoadOutputSchema(proc,paramList);
 
 			Assert.IsTrue(proc.OutputData != null);
 			Assert.IsTrue(proc.OutputData.FirstOrDefault() != null);

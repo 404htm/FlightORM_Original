@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightORM.UI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,9 @@ namespace FlightORM.UI.StoredProcedure
 
 		private void TestQuery(object sender, RoutedEventArgs e)
 		{
-			//var this.Parent.
+			var model = (StoredProcVM)this.DataContext;
+			model.Run();
+
 		}
 	}
 }

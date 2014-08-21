@@ -1,4 +1,5 @@
 ﻿using FlightORM.Common;
+using FlightORM.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -103,7 +104,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void LoadOutputSchema(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
+		public void LoadOutputSchema(SPInfo procedure, IDictionary<string, string> sampleValues, bool useRollback = true)
 		{
 			using(var con = new SqlConnection(_connectionString))
 			{
@@ -112,12 +113,38 @@ namespace FlightORM.SqlServer
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
-				SampleCommand.Connection = con;
-				SampleCommand.Transaction = testTransaction;
+
+				//TODO: Move type conversion
+				var types = TypeMap.Load(@"C:\Users\Kelly Gendron\Source\Repos\FlightORM\Source\FlightORM\FlightORM.SqlServer\Defaults\default.typemap");
+
+				var cmd = new SqlCommand(procedure.Name);
+				foreach(var input in procedure.InputParameters)
+				{
+					var p = new SqlParameter(input.Name, input.TypeInfo);
+					if(sampleValues.ContainsKey(p.ParameterName))
+					{
+						var val = sampleValues[p.ParameterName];
+						var dbType = input.TypeInfo.TypeName;
+
+						//TODO: Migrate this logic - it is not good
+						var type = types.Entries.Where(t => t.DbType.Equals(dbType))
+						.Select(t => t.CodeType)
+						.First();
+
+						
+						p.Value = TypeHelpers.ConvertToType(val, type);
+					}
+					cmd.Parameters.Add(p);
+				}
+
+				//cmd.Parameters.AddWithValue()
+
+				cmd.Connection = con;
+				cmd.Transaction = testTransaction;
 
 				try
 				{
-					reader = SampleCommand.ExecuteReader();
+					reader = cmd.ExecuteReader();
 					procedure.IsValid = true;
 					procedure.Error = null;
 				}

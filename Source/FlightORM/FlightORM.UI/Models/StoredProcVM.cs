@@ -70,6 +70,18 @@ namespace FlightORM.UI.Models
 			set { _config.Parameters = value; }
 		}
 
+		public void Run()
+		{
+			var values = new Dictionary<string, string>();
+			foreach(var el in this.Parameters)
+			{
+				values.Add(el.Definition.Name, el.SampleValue);
+			}
+
+			this._spAnalyzer.LoadOutputSchema(this.Definition, values, true);
+
+		}
+
 		public bool TestProc()
 		{
 			

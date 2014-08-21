@@ -34,10 +34,10 @@ namespace FlightORM.UI.Models
 			var procs = loader.GetProcedures().ToList();
 			foreach (var p in procs) loader.LoadParameters(p);
 
-			var items = procs.Select(p => new SPConfig(p)).ToList();
-			Mappings = new ObservableCollection<SPConfig>(items);
+			var items = procs.Select(p => new SPConfig(p)).Select(p => new StoredProcVM(p, loader)).ToList();
+			Mappings = new ObservableCollection<StoredProcVM>(items);
 		}
 
-		public ObservableCollection<SPConfig> Mappings { get; private set; }
+		public ObservableCollection<StoredProcVM> Mappings { get; private set; }
 	}
 }
