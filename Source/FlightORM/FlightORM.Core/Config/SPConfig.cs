@@ -54,5 +54,8 @@ namespace FlightORM.Core.Config
 
 		[DataMember]
 		public IList<SPParameterConfig> Parameters { get; set; }
+
+		[DataMember]
+		public IList<SPResultConfig> Results { get; set; }
 	}
 }

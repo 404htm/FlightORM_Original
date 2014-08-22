@@ -58,6 +58,7 @@ namespace FlightORM.SqlServerTests
 		{
 			var spa = new StoredProcAnalysis(Settings.Default.AdventureWorks);
 			var proc = spa.GetProcedures().Where(p => p.Name == "uspGetBillOfMaterials").Single();
+			spa.LoadParameters(proc);
 
 			//var cmd = new SqlCommand("uspGetBillOfMaterials");
 			//cmd.CommandType = System.Data.CommandType.StoredProcedure;
