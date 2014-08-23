@@ -12,10 +12,10 @@ namespace FlightORM.UI.Models
 	
 	public class StoredProcVM : SPConfig, INotifyPropertyChanged
 	{
-		IStoredProcAnalyzer _spAnalyzer;
+		ISPLoader _spAnalyzer;
 		SPConfig _config;
 
-		internal StoredProcVM(SPConfig config, IStoredProcAnalyzer spAnalyzer )
+		internal StoredProcVM(SPConfig config, ISPLoader spAnalyzer )
 		{
 			_config = config;
 			_spAnalyzer = spAnalyzer;

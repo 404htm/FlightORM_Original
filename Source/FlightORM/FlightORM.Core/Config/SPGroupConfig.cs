@@ -17,27 +17,19 @@ namespace FlightORM.Core
 	public class SPGroupConfig : ConfigBase<SPGroupConfig>, IEnumerable<SPConfig>
 	{
 
-		public SPGroupConfig(ConnectionInfo connection)
-		{
-			_connection = connection;
-			//TODO: Constructor with filter
-
-		}
-
-
 		#region Storage Properties
 
 		[DataMember] String _name;
 
-		[DataMember] ConnectionInfo _connection;
+		[DataMember] String _connectionName;
 
-		[DataMember] List<SPConfig> _items;
+		[DataMember] IList<SPConfig> _items;
 
 		#endregion
 
 		#region Private Properties
 
-		IStoredProcAnalyzer _loader;
+		ISPLoader _loader;
 
 		#endregion
 
@@ -59,10 +51,12 @@ namespace FlightORM.Core
 
 
 
-		public void CreateNew(IStoredProcAnalyzer loader)
+		public void CreateNew(ISPLoader loader)
 		{
 			_loader = loader;
-
+			_items = _loader.GetProcedures()
+				.Select(λ => new SPConfig(λ))
+				.ToList();
 		}
 
 

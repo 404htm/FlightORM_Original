@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace FlightORM.SqlServer
 {
-	public class StoredProcAnalysis : IStoredProcAnalyzer
+	public class SPLoader : ISPLoader
 	{
 		string _connectionString;
 		//bool _rollbackTestCalls;
 
-		public StoredProcAnalysis(string connectionString)
+		public SPLoader(string connectionString)
 		{
 			 _connectionString = connectionString;
 
@@ -26,7 +26,7 @@ namespace FlightORM.SqlServer
 		///	IMPORTANT: this does not load ancillary information such as parameters and return structure
 		/// </summary>
 		/// <returns>All stored procedures for given connection</returns>
-		public IEnumerable<SPInfo> GetProcedures()
+		public IList<SPInfo> GetProcedures()
 		{
 			using (var cnn = new SqlConnection(_connectionString))
 			{
@@ -37,23 +37,29 @@ namespace FlightORM.SqlServer
 				where sp.type = 'P'", cnn);
 				cmd.CommandType = CommandType.Text;
 				var reader = cmd.ExecuteReader();
-				var index = reader.GetColumnLookup();
+				
 
-				foreach (var r in reader)
-				{
-					var sp = new SPInfo
-					{
-						Id = reader.GetInt32(index["ID"]),
-						Name = reader.GetString(index["Name"]),
-						Schema = reader.GetString(index["Schema"]),
-						DateCreated = reader.GetDateTime(index["Created"]),
-						DateModified = reader.GetDateTime(index["Modified"])
-					};
-					yield return sp;
-				}
+				return getProcedures(reader).ToList();
 			}
 		}
 
+		private IEnumerable<SPInfo> getProcedures(SqlDataReader reader)
+		{
+			var index = reader.GetColumnLookup();
+
+			foreach (var r in reader)
+			{
+				var sp = new SPInfo
+				{
+					Id = reader.GetInt32(index["ID"]),
+					Name = reader.GetString(index["Name"]),
+					Schema = reader.GetString(index["Schema"]),
+					DateCreated = reader.GetDateTime(index["Created"]),
+					DateModified = reader.GetDateTime(index["Modified"])
+				};
+				yield return sp;
+			}
+		}
 
 		public void LoadParameters(SPInfo procedure)
 		{

@@ -30,7 +30,7 @@ namespace FlightORM.UI.Models
 
 		public void Load()
 		{
-			var loader = new StoredProcAnalysis(_cnn);
+			var loader = new SPLoader(_cnn);
 			var procs = loader.GetProcedures().ToList();
 			foreach (var p in procs) loader.LoadParameters(p);
 

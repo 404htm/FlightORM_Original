@@ -43,7 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaInfo.cs" />
     <Compile Include="SQLAnalysis.cs" />
-    <Compile Include="StoredProcAnalysis.cs" />
+    <Compile Include="SPLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlightORM.Common\FlightORM.Common.csproj">

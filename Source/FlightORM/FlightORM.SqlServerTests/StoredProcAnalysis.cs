@@ -16,7 +16,7 @@ namespace FlightORM.SqlServerTests
 		[TestMethod]
 		public void LoadSp_Northwind()
 		{
-			var spa = new StoredProcAnalysis(Settings.Default.Northwind);
+			var spa = new SPLoader(Settings.Default.Northwind);
 			var procs = spa.GetProcedures();
 
 			Assert.IsTrue(procs.Any());
@@ -25,7 +25,7 @@ namespace FlightORM.SqlServerTests
 		[TestMethod]
 		public void LoadSp_Adventure()
 		{
-			var spa = new StoredProcAnalysis(Settings.Default.AdventureWorks);
+			var spa = new SPLoader(Settings.Default.AdventureWorks);
 			var procs = spa.GetProcedures();
 
 			Assert.IsTrue(procs.Any());
@@ -34,7 +34,7 @@ namespace FlightORM.SqlServerTests
 		[TestMethod]
 		public void LoadParams_individual_Northwind()
 		{
-			var spa = new StoredProcAnalysis(Settings.Default.Northwind);
+			var spa = new SPLoader(Settings.Default.Northwind);
 			var procs = spa.GetProcedures().ToList();
 			foreach(var p in procs) spa.LoadParameters(p);
 
@@ -45,7 +45,7 @@ namespace FlightORM.SqlServerTests
 		[TestMethod]
 		public void LoadParams_individual_Adventure()
 		{
-			var spa = new StoredProcAnalysis(Settings.Default.AdventureWorks);
+			var spa = new SPLoader(Settings.Default.AdventureWorks);
 			var procs = spa.GetProcedures().ToList();
 			foreach (var p in procs) spa.LoadParameters(p);
 
@@ -56,7 +56,7 @@ namespace FlightORM.SqlServerTests
 		[TestMethod]
 		public void LoadOutputStructure_Adventure()
 		{
-			var spa = new StoredProcAnalysis(Settings.Default.AdventureWorks);
+			var spa = new SPLoader(Settings.Default.AdventureWorks);
 			var proc = spa.GetProcedures().Where(p => p.Name == "uspGetBillOfMaterials").Single();
 			spa.LoadParameters(proc);
 

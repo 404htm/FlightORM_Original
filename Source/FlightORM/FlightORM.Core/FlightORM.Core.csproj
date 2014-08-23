@@ -57,6 +57,10 @@
       <Project>{0a662bf1-937a-4823-b44f-4bea15322f5c}</Project>
       <Name>FlightORM.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FlightORM.SqlServer\FlightORM.SqlServer.csproj">
+      <Project>{bf126864-d765-4f06-9223-5febfa32f0af}</Project>
+      <Name>FlightORM.SqlServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
