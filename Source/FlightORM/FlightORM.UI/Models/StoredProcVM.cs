@@ -10,7 +10,7 @@ using FlightORM.Common;
 namespace FlightORM.UI.Models
 {
 	
-	public class StoredProcVM : SPConfig
+	public class StoredProcVM : SPConfig, INotifyPropertyChanged
 	{
 		IStoredProcAnalyzer _spAnalyzer;
 		SPConfig _config;
@@ -19,10 +19,15 @@ namespace FlightORM.UI.Models
 		{
 			_config = config;
 			_spAnalyzer = spAnalyzer;
-
+			if(this.Definition.OutputData != null)
+			{
+				this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
+			}
+			
 		}
 
 		public new int ObjectId { get { return _config.ObjectId; } }
+
 		public new bool Enabled {
 			get { return _config.Enabled;}
 			set { _config.Enabled = value; }
@@ -67,7 +72,11 @@ namespace FlightORM.UI.Models
 		public new IList<SPParameterConfig> Parameters
 		{
 			get { return _config.Parameters; }
-			set { _config.Parameters = value; }
+		}
+
+		public IList<SPResultConfig> Results
+		{
+			get; private set;
 		}
 
 		public void Run()
@@ -79,14 +88,19 @@ namespace FlightORM.UI.Models
 			}
 
 			this._spAnalyzer.LoadOutputSchema(this.Definition, values, true);
-
+			//TODO: Design resolver that deals with change detection and restoration of current values
+			this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
+			onPropChanged("Results");
 		}
 
-		public bool TestProc()
+
+
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		void onPropChanged(string propName)
 		{
-			
-			//_spAnalyzer.LoadOutputSchema(_config.Definition);
-			return false;
+			if(PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
 	}
 }

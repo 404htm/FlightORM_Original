@@ -118,9 +118,11 @@ namespace FlightORM.SqlServer
 				var types = TypeMap.Load(@"C:\Users\Kelly Gendron\Source\Repos\FlightORM\Source\FlightORM\FlightORM.SqlServer\Defaults\default.typemap");
 
 				var cmd = new SqlCommand(procedure.Name);
+				cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
 				foreach(var input in procedure.InputParameters)
 				{
-					var p = new SqlParameter(input.Name, input.TypeInfo);
+					var p = new SqlParameter(input.Name, input.TypeInfo.TypeName);
 					if(sampleValues.ContainsKey(p.ParameterName))
 					{
 						var val = sampleValues[p.ParameterName];
