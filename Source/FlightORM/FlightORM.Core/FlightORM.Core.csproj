@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ConnectionInfo.cs" />
     <Compile Include="Config\GlobalSettings.cs" />
     <Compile Include="Config\SPConfig.cs" />
     <Compile Include="Config\SPResultConfig.cs" />
-    <Compile Include="Config\SPGroupConfig.cs" />
     <Compile Include="Config\SPParameterConfig.cs" />
+    <Compile Include="Factories\SPLoaderFactory.cs" />
     <Compile Include="NamingHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Config\SPGroupConfig.cs" />
     <Compile Include="Templates\StoredProcedure\InputDo.cs" />
     <Compile Include="Templates\StoredProcedure\ResultDo.cs" />
   </ItemGroup>
