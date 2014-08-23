@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FlightORM.Core.Config
 {
 	[DataContract]
-	public class SPParameterConfig
+	public class SPParameterConfig : IParameterTestInfo
 	{
 		public SPParameterConfig(SPParameter parameter)
 		{
@@ -42,5 +42,22 @@ namespace FlightORM.Core.Config
 
 		[DataMember]
 		public string SampleValue { get; set;}
+
+		string IParameterTestInfo.Name
+		{
+			get { return Definition.Name; }
+		}
+
+
+		string IParameterTestInfo.DBType
+		{
+			get { return Definition.TypeInfo.TypeName; }
+		}
+
+		string IParameterTestInfo.DotNetType
+		{
+			//TODO: Figure out where this lookup should happen
+			get { return this.Type; }
+		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using FlightORM.Core.Config;
+﻿using FlightORM.Core;
+using FlightORM.Core.Config;
+using FlightORM.Core.Factories;
 using FlightORM.SqlServer;
 using System;
 using System.Collections.Generic;
@@ -11,31 +13,28 @@ namespace FlightORM.UI.Models
 {
 	public class StoredProcGroupVM
 	{
-		string _cnn;
+		ConnectionInfo _cnn;
+		SPGroupConfig _group;
 
-		/// <summary>
-		/// Designer Constructor
-		/// </summary>
 		public StoredProcGroupVM()
 		{
-			_cnn = @"Data Source=.\dev;Initial Catalog=NORTHWND;Integrated Security=True";
+			var cstr = @"Data Source=.\dev;Initial Catalog=NORTHWND;Integrated Security=True";
+			_cnn = new ConnectionInfo{DisplayName="Default", ConnectionType = "sqlserver", ConnectionString=cstr};
 			Load();
 		}
 
 		public StoredProcGroupVM(string connectionString)
 		{
-			_cnn=connectionString;
-			
+			_cnn = new ConnectionInfo { DisplayName = "Default", ConnectionType = "sqlserver", ConnectionString = connectionString };
+			Load();
 		}
 
 		public void Load()
 		{
-			var loader = new SPLoader(_cnn);
-			var procs = loader.GetProcedures().ToList();
-			foreach (var p in procs) loader.LoadParameters(p);
-
-			var items = procs.Select(p => new SPConfig(p)).Select(p => new StoredProcVM(p, loader)).ToList();
-			Mappings = new ObservableCollection<StoredProcVM>(items);
+			var loader = SPLoaderFactory.GetInstance(_cnn);
+			_group = SPGroupConfig.CreateNew("Default", loader);
+			var procs = _group.Procedures.Select(λ => new StoredProcVM(λ, loader)).ToList();
+			Mappings = new ObservableCollection<StoredProcVM>(procs);
 		}
 
 		public ObservableCollection<StoredProcVM> Mappings { get; private set; }

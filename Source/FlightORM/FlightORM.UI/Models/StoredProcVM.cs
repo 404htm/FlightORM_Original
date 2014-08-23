@@ -10,7 +10,7 @@ using FlightORM.Common;
 namespace FlightORM.UI.Models
 {
 	
-	public class StoredProcVM : SPConfig, INotifyPropertyChanged
+	public class StoredProcVM :  INotifyPropertyChanged
 	{
 		ISPLoader _spAnalyzer;
 		SPConfig _config;
@@ -56,7 +56,6 @@ namespace FlightORM.UI.Models
 		public new SPInfo Definition
 		{
 			get { return _config.Definition; }
-			set { _config.Definition = value; }
 		}
 		public new IList<string> SystemFlags
 		{
@@ -87,9 +86,9 @@ namespace FlightORM.UI.Models
 				values.Add(el.Definition.Name, el.SampleValue);
 			}
 
-			this._spAnalyzer.LoadOutputSchema(this.Definition, values, true);
+			//this._spAnalyzer.GetOutputSchema(this.Definition, values, true);
 			//TODO: Design resolver that deals with change detection and restoration of current values
-			this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
+			//this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
 			onPropChanged("Results");
 		}
 
