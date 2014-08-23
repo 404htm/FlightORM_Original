@@ -61,7 +61,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void LoadParameters(SPInfo procedure)
+		public IList<SPParameter> GetParameters(int procedureID)
 		{
 			var query = @"select p.name as Name, p.object_id as ProcedureId, p.parameter_id as 'position', t.name as 't.name', 
 							p.is_output as 'output', p.max_length as 't.maxLen', p.precision as 't.precision', 
@@ -75,9 +75,9 @@ namespace FlightORM.SqlServer
 			{
 				cnn.Open();
 				var cmd = new SqlCommand(query, cnn);
-				cmd.Parameters.Add(new SqlParameter("@sp_id", procedure.Id));
+				cmd.Parameters.Add(new SqlParameter("@sp_id", procedureID));
 				var reader = cmd.ExecuteReader();
-				procedure.InputParameters = getParameters(reader).Select(p => p.Item2).ToList();
+				return getParameters(reader).Select(λ => λ.Item2).ToList();
 			}
 		}
 
@@ -110,7 +110,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void LoadOutputSchema(SPInfo procedure, IDictionary<string, string> sampleValues, bool useRollback = true)
+		public void GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
 		{
 			using(var con = new SqlConnection(_connectionString))
 			{
@@ -126,26 +126,12 @@ namespace FlightORM.SqlServer
 				var cmd = new SqlCommand(procedure.Name);
 				cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-				foreach(var input in procedure.InputParameters)
+				foreach(var pi in parameterInfo)
 				{
-					var p = new SqlParameter(input.Name, input.TypeInfo.TypeName);
-					if(sampleValues.ContainsKey(p.ParameterName))
-					{
-						var val = sampleValues[p.ParameterName];
-						var dbType = input.TypeInfo.TypeName;
-
-						//TODO: Migrate this logic - it is not good
-						var type = types.Entries.Where(t => t.DbType.Equals(dbType))
-						.Select(t => t.CodeType)
-						.First();
-
-						
-						p.Value = TypeHelpers.ConvertToType(val, type);
-					}
+					var p = new SqlParameter(pi.Name, pi.DBType);
+					p.Value = TypeHelpers.ConvertToType(pi.SampleValue, pi.DotNetType);
 					cmd.Parameters.Add(p);
 				}
-
-				//cmd.Parameters.AddWithValue()
 
 				cmd.Connection = con;
 				cmd.Transaction = testTransaction;

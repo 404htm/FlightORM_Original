@@ -51,18 +51,29 @@ namespace FlightORM.Core
 
 
 
-		public void CreateNew(ISPLoader loader)
+		public static SPGroupConfig CreateNew(string name, ISPLoader loader)
 		{
-			_loader = loader;
-			_items = _loader.GetProcedures()
+			var inst = new SPGroupConfig();
+			inst._name = name;
+			inst._loader = loader;
+			inst._items = loader.GetProcedures()
 				.Select(λ => new SPConfig(λ))
 				.ToList();
+
+			inst.LoadAllParams();
+			return inst;
 		}
 
 
-		public void RescanAll()
+		public void LoadAllParams()
 		{
-			throw new NotImplementedException();
+			foreach(var sp in _items)
+			{
+				var result = _loader.GetParameters(sp.ObjectId)
+					.Select(λ => new SPParameterConfig(λ))
+					.ToList();
+				sp.Parameters = result;
+			}
 		}
 
 		public void ValidateAll()
@@ -85,6 +96,10 @@ namespace FlightORM.Core
 			throw new NotImplementedException();
 		}
 
+		#region Events
+
+
+		#endregion Events
 
 		#region IEnumerable Implementation
 		public IEnumerator<SPConfig> GetEnumerator()

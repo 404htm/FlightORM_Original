@@ -11,10 +11,7 @@ namespace FlightORM.Core.Config
 	[DataContract]
 	public class SPConfig 
 	{
-		public SPConfig()
-		{
 
-		}
 		public SPConfig(SPInfo definition)
 		{
 			Definition = definition;
@@ -23,6 +20,10 @@ namespace FlightORM.Core.Config
 			Definition = definition;
 			Parameters = definition.InputParameters.Select(p => new SPParameterConfig(p)).ToList();
 		}
+
+		[DataMember]
+		public SPInfo Definition { get; private set; }
+
 
 		[DataMember]
 		public int ObjectId { get { return Definition.Id; }}
@@ -43,8 +44,7 @@ namespace FlightORM.Core.Config
 		[DataMember]
 		public string InputType { get; set; }
 
-		[DataMember]
-		public SPInfo Definition { get; set; }
+
 
 		[DataMember]
 		public IList<string> SystemFlags { get; set;}

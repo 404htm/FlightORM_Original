@@ -32,14 +32,15 @@ namespace FlightORM.SqlServerTests
 		}
 
 		[TestMethod]
-		public void LoadParams_individual_Northwind()
+		public void GetParams_individual_Northwind()
 		{
 			var spa = new SPLoader(Settings.Default.Northwind);
 			var procs = spa.GetProcedures().ToList();
-			foreach(var p in procs) spa.LoadParameters(p);
-
-			Assert.IsTrue(! procs.Where(p => p.InputParameters == null).Any());
-			Assert.IsTrue(procs.Where(p => p.InputParameters.Any()).Any());
+			foreach(var p in procs)
+			{
+				var result = spa.GetParameters(p.Id);
+				Assert.IsTrue(result != null);
+			};
 		}
 
 		[TestMethod]
@@ -47,10 +48,11 @@ namespace FlightORM.SqlServerTests
 		{
 			var spa = new SPLoader(Settings.Default.AdventureWorks);
 			var procs = spa.GetProcedures().ToList();
-			foreach (var p in procs) spa.LoadParameters(p);
-
-			Assert.IsTrue(!procs.Where(p => p.InputParameters == null).Any());
-			Assert.IsTrue(procs.Where(p => p.InputParameters.Any()).Any());
+			foreach (var p in procs)
+			{
+				var result = spa.GetParameters(p.Id);
+				Assert.IsTrue(result != null);
+			};
 		}
 
 		[TestMethod]
@@ -58,7 +60,7 @@ namespace FlightORM.SqlServerTests
 		{
 			var spa = new SPLoader(Settings.Default.AdventureWorks);
 			var proc = spa.GetProcedures().Where(p => p.Name == "uspGetBillOfMaterials").Single();
-			spa.LoadParameters(proc);
+			//spa.LoadParameters(proc);
 
 			//var cmd = new SqlCommand("uspGetBillOfMaterials");
 			//cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -68,8 +70,8 @@ namespace FlightORM.SqlServerTests
 			paramList.Add("@CheckDate", "4/18/2004");
 			//cmd.Parameters.Add(new SqlParameter("@StartProductID", 893));
 			//cmd.Parameters.Add(new SqlParameter("@CheckDate", new DateTime(2004, 4, 18)));
-			spa.LoadOutputSchema(proc,paramList);
-
+			//spa.LoadOutputSchema(proc, paramDefs , paramValues);
+			//TODO: MOCK OBJECT
 			Assert.IsTrue(proc.OutputData != null);
 			Assert.IsTrue(proc.OutputData.FirstOrDefault() != null);
 			Assert.IsTrue(proc.OutputData.First().Columns.Count() ==  8);
