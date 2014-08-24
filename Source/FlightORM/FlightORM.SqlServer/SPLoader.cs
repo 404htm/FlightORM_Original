@@ -165,12 +165,13 @@ namespace FlightORM.SqlServer
 			foreach (var r in reader)
 			{
 				var procId = reader.GetInt32(index["ProcedureId"]);
-				var typeInfo = new DbTypeInfo();
-				typeInfo.TypeName = reader.GetString(index["t.name"]);
-				typeInfo.MaxLength = reader.GetInt16(index["t.maxLen"]);
-				typeInfo.Precision = reader.GetByte(index["t.precision"]);
-				typeInfo.Scale = reader.GetByte(index["t.scale"]);
 
+				var typeName = reader.GetString(index["t.name"]);
+				var maxLength = reader.GetInt16(index["t.maxLen"]);
+				var precision = reader.GetByte(index["t.precision"]);
+				var scale = reader.GetByte(index["t.scale"]);
+				var typeInfo = new DbTypeInfo(typeName, null, maxLength, precision, scale);
+				
 				var name = reader.GetString(index["Name"]);
 				var position = reader.GetInt32(index["position"]);
 				var isOutput = reader.GetBoolean(index["output"]);
