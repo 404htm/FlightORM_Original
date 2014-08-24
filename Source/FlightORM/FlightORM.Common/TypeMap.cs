@@ -15,25 +15,20 @@ namespace FlightORM.Common
 			Entries = new List<TypeInfo>();
 		}
 
-		[DataMember]
-		public List<TypeInfo> Entries { get; set; }
-		[DataMember]
-		public String Source { get; set;}
+		[DataMember] public List<TypeInfo> Entries { get; set; }
+		[DataMember] public String Source { get; set;}
+
+		public string GetCodeType(string dbType)
+		{
+			if(dbType == null) return null;
+
+			var type = Entries
+			.Where(λ => λ.DbType.Equals(dbType))
+			.Select(λ => λ.CodeType)
+			.FirstOrDefault();
+			return type??"object";
+		}
 	}
 
 
-	[DataContract]
-	public class TypeInfo
-	{
-	    [DataMember]
-        public string CodeType { get; set; }
-        [DataMember]
-        public bool IsValueType { get; set; }
-        [DataMember]
-        public string DbType { get; set; }
-        [DataMember]
-        public string Accessor { get; set; }
-		[DataMember]
-        public string Enumeration { get; set; }
-    }
 }

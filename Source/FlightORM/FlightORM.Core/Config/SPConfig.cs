@@ -12,6 +12,7 @@ namespace FlightORM.Core.Config
 	public class SPConfig 
 	{
 
+
 		#region Storage Properties
 
 		[DataMember] SPInfo _core;
@@ -21,13 +22,15 @@ namespace FlightORM.Core.Config
 		#region Private Properties
 
 		ISPLoader _loader;
+		TypeMap _typeMap;
 
 		#endregion
 
-		internal SPConfig(SPInfo definition, ISPLoader loader)
+		internal SPConfig(SPInfo definition, ISPLoader loader, TypeMap typeMap)
 		{
 			_core = definition;
 			_loader = loader;
+			_typeMap = typeMap;
 
 			//Defaults:
 			FriendlyName = NamingHelpers.SplitObjectName(definition.Name);
@@ -72,17 +75,23 @@ namespace FlightORM.Core.Config
 		public void LoadParameters()
 		{
 			var result = _loader.GetParameters(_core)
-					.Select(λ => new SPParameterConfig(λ))
+					.Select(λ => new SPParameterConfig(λ, _typeMap))
 					.ToList();
 			this.Parameters = result;
 		}
 
-		public void LoadOutputs()
+		public bool LoadOutputs()
 		{
 			string msg;
 			var result = _loader.GetOutputSchema(_core, this.Parameters.Cast<IParameterTestInfo>(), out msg);
-			this.IsValid = msg == null;
+			Results = result
+				.Select(λ => new SPResultConfig(λ))
+				.ToList();
+
+			var isValid = msg == null;
+			this.IsValid = isValid;
 			this.ErrorText = msg;
+			return isValid;
 		}
 	}
 }

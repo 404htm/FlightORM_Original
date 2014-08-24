@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlightORM.Common;
 
 namespace FlightORM.UI.Models
 {
@@ -32,7 +33,8 @@ namespace FlightORM.UI.Models
 		public void Load()
 		{
 			var loader = SPLoaderFactory.GetInstance(_cnn);
-			_group = SPGroupConfig.CreateNew("Default", loader);
+			var map = TypeMap.Load(@"C:\Users\Kelly Gendron\Source\Repos\FlightORM\Source\FlightORM\FlightORM.SqlServer\Defaults\default.typemap");
+			_group = SPGroupConfig.CreateNew("Default", loader, map);
 			var procs = _group.Procedures.Select(λ => new StoredProcVM(λ, loader)).ToList();
 			Mappings = new ObservableCollection<StoredProcVM>(procs);
 		}

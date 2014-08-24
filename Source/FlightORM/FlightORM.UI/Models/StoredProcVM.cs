@@ -80,16 +80,13 @@ namespace FlightORM.UI.Models
 
 		public void Run()
 		{
-			var values = new Dictionary<string, string>();
-			foreach(var el in this.Parameters)
-			{
-				values.Add(el.Definition.Name, el.SampleValue);
-			}
+			_config.LoadOutputs();
 
 			//this._spAnalyzer.GetOutputSchema(this.Definition, values, true);
 			//TODO: Design resolver that deals with change detection and restoration of current values
 			//this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
 			onPropChanged("Results");
+			onPropChanged("IsValid");
 		}
 
 

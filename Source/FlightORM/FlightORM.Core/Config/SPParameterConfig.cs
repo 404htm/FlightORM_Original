@@ -11,15 +11,17 @@ namespace FlightORM.Core.Config
 	[DataContract]
 	public class SPParameterConfig : IParameterTestInfo
 	{
-		public SPParameterConfig(SPParameter parameter)
+		public SPParameterConfig(SPParameter parameter, TypeMap map)
 		{
 			Definition = parameter;
 			FriendlyName = NamingHelpers.SplitObjectName(Definition.Name);
 			IsRequired = Definition.DefaultValue == null;
-			Type=Definition.TypeInfo.TypeName;
+			Type= map.GetCodeType(Definition.TypeInfo.TypeName);
 			SampleValue = Definition.DefaultValue as String;
 			Enabled = true;
 		}
+
+
 
 		[DataMember]
 		public bool Enabled { get; set; }

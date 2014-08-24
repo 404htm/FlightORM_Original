@@ -62,7 +62,8 @@ namespace FlightORM.SqlServer
 				cmd.Parameters.Add(new SqlParameter("@sp_id", procedure.Id));
 				using(var reader = cmd.ExecuteReader())
 				{
-					return getParameters(reader).Select(λ => λ.Item2).ToList();
+					var result = getParameters(reader).Select(λ => λ.Item2).ToList();
+					return result;
 				}
 			}
 		}

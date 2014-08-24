@@ -45,17 +45,13 @@ namespace FlightORM.Core
 
 		#endregion	
 
-		
-
-
-
-		public static SPGroupConfig CreateNew(string name, ISPLoader loader)
+		public static SPGroupConfig CreateNew(string name, ISPLoader loader, TypeMap map)
 		{
 			var inst = new SPGroupConfig();
 			inst._name = name;
 			inst._loader = loader;
 			inst._items = loader.GetProcedures()
-				.Select(λ => new SPConfig(λ, loader))
+				.Select(λ => new SPConfig(λ, loader, map))
 				.ToList();
 
 			inst.LoadAllParams();

@@ -12,7 +12,7 @@ namespace FlightORM.Common
 	{
 		public DbTypeInfo(string typeName, bool? allowNull, int maxLength, int precision, int scale)
 		{
-			TypeName = TypeName;
+			TypeName = typeName;
 			AllowNull = allowNull;
 			MaxLength = maxLength;
 			Precision = precision;
