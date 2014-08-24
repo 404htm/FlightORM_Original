@@ -32,12 +32,12 @@ namespace FlightORM.Core.Config
 
 		public bool IsScalar
 		{
-			get { return _definition.IsScalar; }
+			get { return _definition.IsProbablyScalar; }
 		}
 
 		public bool IsAction
 		{
-			get { return _definition.IsAction; }
+			get { return _definition.IsProbablyAction; }
 		} 
 		#endregion
 

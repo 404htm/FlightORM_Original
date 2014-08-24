@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace FlightORM.Common
 {
+	[DataContract]
 	public class SPParameter
 	{
-		public DbTypeInfo TypeInfo { get; set;}
-		public string Name { get; set;}
-		public int Position { get; set; }
-		public bool IsOutput { get; set; }
-		public bool IsReadOnly { get; set;}
+		public SPParameter(string name, DbTypeInfo type, int position, bool isOutput, bool isReadOnly, object defaultValue)
+		{
+			Name = name;
+			TypeInfo = type;
+			Position = position;
+			IsOutput = isOutput; 
+			IsReadOnly = isReadOnly;
+			DefaultValue = defaultValue;
+		}
 
-		
-		public bool HasDefault { get; set;}
-		public object DefaultValue { get; set;}
-
-		//TODO: Move display methods
-		public string Direction { get { return IsOutput?"In/Out":"In"; } }
-		public string DBDefault { get {  return HasDefault?DefaultValue.ToString():"-";} }
+		[DataMember] public DbTypeInfo TypeInfo { get; private set;}
+		[DataMember] public string Name { get; private set; }
+		[DataMember] public int Position { get; private set; }
+		[DataMember] public bool IsOutput { get; private set; }
+		[DataMember] public bool IsReadOnly { get; private set; }
+		[DataMember] public object DefaultValue { get; private set; }
 	}
 }

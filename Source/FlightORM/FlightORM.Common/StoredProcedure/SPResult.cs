@@ -21,7 +21,10 @@ namespace FlightORM.Common
 		[DataMember] public List<ResultElement> Columns { get; private set;}
 		[DataMember] public DateTime DateRetrieved { get; private set;}
 
-		public bool IsScalar { get {  return Columns.Count() == 1; } }
-		public bool IsAction { get {  return Columns.Count() == 0; } }
+		/// <summary>Query returns one result making it likely that result type should be scalar </summary>
+		public bool IsProbablyScalar { get {  return Columns.Count() == 1; } }
+
+		/// <summary>Query returns no results making it likely that result type should be void </summary>
+		public bool IsProbablyAction { get {  return Columns.Count() == 0; } }
 	}
 }

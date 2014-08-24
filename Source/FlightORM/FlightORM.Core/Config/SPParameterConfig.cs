@@ -15,7 +15,7 @@ namespace FlightORM.Core.Config
 		{
 			Definition = parameter;
 			FriendlyName = NamingHelpers.SplitObjectName(Definition.Name);
-			IsRequired = !Definition.HasDefault;
+			IsRequired = Definition.DefaultValue == null;
 			Type=Definition.TypeInfo.TypeName;
 			SampleValue = Definition.DefaultValue as String;
 			Enabled = true;

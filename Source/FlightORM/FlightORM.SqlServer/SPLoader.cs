@@ -105,7 +105,7 @@ namespace FlightORM.SqlServer
 				var resultIndex = 0;
 				do
 				{
-					var result = new SPResult() { ResultIndex = resultIndex };
+					var result = new SPResult(resultIndex);
 					for (int c = 0; c < reader.FieldCount;c++)
 					{
 						result.Columns.Add(new ResultElement{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
@@ -171,14 +171,12 @@ namespace FlightORM.SqlServer
 				typeInfo.Precision = reader.GetByte(index["t.precision"]);
 				typeInfo.Scale = reader.GetByte(index["t.scale"]);
 
-				var param = new SPParameter();
-				param.Name = reader.GetString(index["Name"]);
-				param.Position = reader.GetInt32(index["position"]);
-				param.TypeInfo = typeInfo;
-				param.IsOutput = reader.GetBoolean(index["output"]);
-				param.IsReadOnly = reader.GetBoolean(index["readonly"]);
-				param.HasDefault = reader.GetBoolean(index["hasDefault"]);
-				param.DefaultValue = reader.GetValue(index["defaultValue"]);
+				var name = reader.GetString(index["Name"]);
+				var position = reader.GetInt32(index["position"]);
+				var isOutput = reader.GetBoolean(index["output"]);
+				var isReadOnly = reader.GetBoolean(index["readonly"]);
+				var defaultValue = reader.GetValue(index["defaultValue"]);
+				var param = new SPParameter(name, typeInfo, position, isOutput, isReadOnly, defaultValue);
 
 				yield return Tuple.Create(procId, param);
 			}
