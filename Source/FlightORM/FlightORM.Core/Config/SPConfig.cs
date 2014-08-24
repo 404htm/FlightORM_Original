@@ -18,7 +18,7 @@ namespace FlightORM.Core.Config
 			FriendlyName = NamingHelpers.SplitObjectName(definition.Name);
 			Enabled = true;
 			Definition = definition;
-			Parameters = definition.InputParameters.Select(p => new SPParameterConfig(p)).ToList();
+			//Parameters = definition.InputParameters.Select(p => new SPParameterConfig(p)).ToList();
 		}
 
 		[DataMember]

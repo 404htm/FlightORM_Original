@@ -19,10 +19,10 @@ namespace FlightORM.UI.Models
 		{
 			_config = config;
 			_spAnalyzer = spAnalyzer;
-			if(this.Definition.OutputData != null)
-			{
-				this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
-			}
+			//if(this.Definition.OutputData != null)
+			//{
+			//	this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
+			//}
 			
 		}
 

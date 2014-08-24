@@ -188,14 +188,13 @@ namespace FlightORM.SqlServer
 
 			foreach (var r in reader)
 			{
-				var sp = new SPInfo
-				{
-					Id = reader.GetInt32(index["ID"]),
-					Name = reader.GetString(index["Name"]),
-					Schema = reader.GetString(index["Schema"]),
-					DateCreated = reader.GetDateTime(index["Created"]),
-					DateModified = reader.GetDateTime(index["Modified"])
-				};
+				var id = reader.GetInt32(index["ID"]);
+				var name = reader.GetString(index["Name"]);
+				var schema = reader.GetString(index["Schema"]);
+				var dateCreated = reader.GetDateTime(index["Created"]);
+				var dateModified = reader.GetDateTime(index["Modified"]);
+
+				var sp = new SPInfo(id, name, schema, dateCreated, dateModified);
 				yield return sp;
 			}
 		}
