@@ -13,7 +13,6 @@ namespace FlightORM.SqlServer
 	public class SPLoader : ISPLoader
 	{
 		string _connectionString;
-		//bool _rollbackTestCalls;
 
 		public SPLoader(string connectionString)
 		{
@@ -23,7 +22,6 @@ namespace FlightORM.SqlServer
 
 		/// <summary>
 		///	Lists all stored procedures available for the given database
-		///	IMPORTANT: this does not load ancillary information such as parameters and return structure
 		/// </summary>
 		/// <returns>All stored procedures for given connection</returns>
 		public IList<SPInfo> GetProcedures()
@@ -61,7 +59,7 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public IList<SPParameter> GetParameters(int procedureID)
+		public IList<SPParameter> GetParameters(SPInfo procedure)
 		{
 			var query = @"select p.name as Name, p.object_id as ProcedureId, p.parameter_id as 'position', t.name as 't.name', 
 							p.is_output as 'output', p.max_length as 't.maxLen', p.precision as 't.precision', 
@@ -75,13 +73,11 @@ namespace FlightORM.SqlServer
 			{
 				cnn.Open();
 				var cmd = new SqlCommand(query, cnn);
-				cmd.Parameters.Add(new SqlParameter("@sp_id", procedureID));
+				cmd.Parameters.Add(new SqlParameter("@sp_id", procedure.Id));
 				var reader = cmd.ExecuteReader();
 				return getParameters(reader).Select(λ => λ.Item2).ToList();
 			}
 		}
-
-
 
 		private IEnumerable<Tuple<int, SPParameter>> getParameters(SqlDataReader reader)
 		{
@@ -89,14 +85,12 @@ namespace FlightORM.SqlServer
 			foreach (var r in reader)
 			{
 				var procId = reader.GetInt32(index["ProcedureId"]);
-
 				var typeInfo = new DbTypeInfo();
 				typeInfo.TypeName = reader.GetString(index["t.name"]);
 				typeInfo.MaxLength = reader.GetInt16(index["t.maxLen"]);
 				typeInfo.Precision = reader.GetByte(index["t.precision"]);
 				typeInfo.Scale = reader.GetByte(index["t.scale"]);
 
-		
 				var param = new SPParameter();
 				param.Name = reader.GetString(index["Name"]);
 				param.Position = reader.GetInt32(index["position"]);
@@ -110,22 +104,23 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
+		public IList<SPResult> GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
 		{
 			using(var con = new SqlConnection(_connectionString))
 			{
 				SqlTransaction testTransaction = null;
 				SqlDataReader reader;
+				var resultSet = new List<SPResult>();
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
 
-				//TODO: Move type conversion
-				var types = TypeMap.Load(@"C:\Users\Kelly Gendron\Source\Repos\FlightORM\Source\FlightORM\FlightORM.SqlServer\Defaults\default.typemap");
-
-				var cmd = new SqlCommand(procedure.Name);
+				var cmd = new SqlCommand(string.Format("[{0}].{1}", procedure.Schema, procedure.Name));
 				cmd.CommandType = System.Data.CommandType.StoredProcedure;
+				cmd.Connection = con;
+				cmd.Transaction = testTransaction;
 
+				//Populate test parameters
 				foreach(var pi in parameterInfo)
 				{
 					var p = new SqlParameter(pi.Name, pi.DBType);
@@ -133,41 +128,24 @@ namespace FlightORM.SqlServer
 					cmd.Parameters.Add(p);
 				}
 
-				cmd.Connection = con;
-				cmd.Transaction = testTransaction;
+				reader = cmd.ExecuteReader();
 
-				try
-				{
-					reader = cmd.ExecuteReader();
-					procedure.IsValid = true;
-					procedure.Error = null;
-				}
-				catch(SqlException ex)
-				{
-					procedure.IsValid = false;
-					procedure.Error = ex.Message;
-					return;
-				}
-				
-				procedure.OutputData = new List<SPResult>();
-				//DataTable schema = reader.GetSchemaTable();
-
+				//Determine schema for each set returned by stored procedure
 				var resultIndex = 0;
 				do
 				{
 					var result = new SPResult() { ResultIndex = resultIndex };
-
 					for (int c = 0; c < reader.FieldCount;c++)
 					{
 						result.Columns.Add(new ResultElement{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
 					}
-
-					procedure.OutputData.Add(result);
+					resultSet.Add(result);
 				}
 				while(reader.NextResult());
 
 				reader.Close();
 				if (useRollback) testTransaction.Rollback();
+				return resultSet;
 			}
 		}
 
@@ -198,6 +176,8 @@ namespace FlightORM.SqlServer
 
 				reader.Close();
 				if (useRollback) testTransaction.Rollback();
+
+				
 			}
 		}
 	}

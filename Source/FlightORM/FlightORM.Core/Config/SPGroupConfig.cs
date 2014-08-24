@@ -69,7 +69,7 @@ namespace FlightORM.Core
 		{
 			foreach(var sp in _items)
 			{
-				var result = _loader.GetParameters(sp.ObjectId)
+				var result = _loader.GetParameters(sp.Definition)
 					.Select(λ => new SPParameterConfig(λ))
 					.ToList();
 				sp.Parameters = result;

@@ -38,7 +38,7 @@ namespace FlightORM.SqlServerTests
 			var procs = spa.GetProcedures().ToList();
 			foreach(var p in procs)
 			{
-				var result = spa.GetParameters(p.Id);
+				var result = spa.GetParameters(p);
 				Assert.IsTrue(result != null);
 			};
 		}
@@ -50,7 +50,7 @@ namespace FlightORM.SqlServerTests
 			var procs = spa.GetProcedures().ToList();
 			foreach (var p in procs)
 			{
-				var result = spa.GetParameters(p.Id);
+				var result = spa.GetParameters(p);
 				Assert.IsTrue(result != null);
 			};
 		}
@@ -59,7 +59,7 @@ namespace FlightORM.SqlServerTests
 		public void LoadOutputStructure_Adventure()
 		{
 			var spa = new SPLoader(Settings.Default.AdventureWorks);
-			var proc = spa.GetProcedures().Where(p => p.Name == "uspGetBillOfMaterials").Single();
+			var proc = spa.GetProcedures().Where(λ => λ.Name == "uspGetBillOfMaterials").Single();
 			//spa.LoadParameters(proc);
 
 			//var cmd = new SqlCommand("uspGetBillOfMaterials");
