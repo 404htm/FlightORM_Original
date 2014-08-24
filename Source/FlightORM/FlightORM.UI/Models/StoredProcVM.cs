@@ -26,7 +26,7 @@ namespace FlightORM.UI.Models
 			
 		}
 
-		public new int ObjectId { get { return _config.ObjectId; } }
+		public new int ObjectId { get { return _config.Definition.Id; } }
 
 		public new bool Enabled {
 			get { return _config.Enabled;}

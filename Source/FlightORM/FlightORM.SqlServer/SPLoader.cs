@@ -75,7 +75,7 @@ namespace FlightORM.SqlServer
 		/// <param name="parameterInfo">The required parameter, type info, and test value</param>
 		/// <param name="useRollback">If true the query will be run inside a transaction and rolled back</param>
 		/// <returns>A list of output schemas</returns>
-		public IList<SPResult> GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
+		public IList<SPResult> GetOutputSchema(SPInfo procedure, IEnumerable<IParameterTestInfo> parameterInfo, out string ErrorMsg, bool useRollback = true)
 		{
 			using(var con = new SqlConnection(_connectionString))
 			{
@@ -99,23 +99,33 @@ namespace FlightORM.SqlServer
 					cmd.Parameters.Add(p);
 				}
 
-				reader = cmd.ExecuteReader();
-
-				//Determine schema for each set returned by stored procedure
-				var resultIndex = 0;
-				do
-				{
-					var result = new SPResult(resultIndex);
-					for (int c = 0; c < reader.FieldCount;c++)
+				try {
+					using( reader = cmd.ExecuteReader())
 					{
-						result.Columns.Add(new ResultElement{Name = reader.GetName(c), Type = reader.GetFieldType(c)});
+						var resultIndex = 0;
+						do
+						{
+							//Determine schema for each set returned by stored procedure
+							var result = new SPResult(resultIndex);
+							for (int c = 0; c < reader.FieldCount; c++)
+							{
+								result.Columns.Add(new ResultElement { Name = reader.GetName(c), Type = reader.GetFieldType(c) });
+							}
+							resultSet.Add(result);
+						}
+						while (reader.NextResult());
 					}
-					resultSet.Add(result);
+					ErrorMsg = null;
 				}
-				while(reader.NextResult());
+				catch(SqlException ex)
+				{
+					ErrorMsg = ex.Message;
+				}
+				finally
+				{
+					if (useRollback) testTransaction.Rollback();
+				}
 
-				reader.Close();
-				if (useRollback) testTransaction.Rollback();
 				return resultSet;
 			}
 		}
@@ -123,18 +133,17 @@ namespace FlightORM.SqlServer
 		/// <summary>
 		/// Runs the specified stored procedure but doesn't read the result
 		/// This is used to make sure the command/query is actually valid
-		/// Calling code must handle the resulting SQL Exception
 		/// </summary>
 		/// <param name="procedure">The stored procedure to be tested</param>
 		/// <param name="parameterInfo">The required parameter, type info, and test value</param>
 		/// <param name="useRollback">If true the query will be run inside a transaction and rolled back</param>
-		public void TestExecution(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
+		public void TestExecution(SPInfo procedure, IEnumerable<IParameterTestInfo> parameterInfo, out string ErrorMsg, bool useRollback = true)
 		{
 			using (var con = new SqlConnection(_connectionString))
 			{
 				var resultSet = new List<SPResult>();
 				SqlTransaction testTransaction = null;
-				SqlDataReader reader;
+				SqlDataReader reader = null;
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
@@ -152,8 +161,19 @@ namespace FlightORM.SqlServer
 					cmd.Parameters.Add(p);
 				}
 
-				reader = cmd.ExecuteReader();
-				reader.Close();
+				try
+				{
+					reader = cmd.ExecuteReader();
+					ErrorMsg = null;
+				}
+				catch(SqlException ex) 
+				{ 
+					ErrorMsg = ex.Message; 
+				}
+				finally 
+				{ 
+					if(reader != null) reader.Close();
+				}; 
 			}
 		}
 

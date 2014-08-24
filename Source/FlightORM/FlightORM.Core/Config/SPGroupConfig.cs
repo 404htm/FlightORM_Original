@@ -20,9 +20,7 @@ namespace FlightORM.Core
 		#region Storage Properties
 
 		[DataMember] String _name;
-
 		[DataMember] String _connectionName;
-
 		[DataMember] IList<SPConfig> _items;
 
 		#endregion
@@ -57,7 +55,7 @@ namespace FlightORM.Core
 			inst._name = name;
 			inst._loader = loader;
 			inst._items = loader.GetProcedures()
-				.Select(λ => new SPConfig(λ))
+				.Select(λ => new SPConfig(λ, loader))
 				.ToList();
 
 			inst.LoadAllParams();
@@ -69,10 +67,7 @@ namespace FlightORM.Core
 		{
 			foreach(var sp in _items)
 			{
-				var result = _loader.GetParameters(sp.Definition)
-					.Select(λ => new SPParameterConfig(λ))
-					.ToList();
-				sp.Parameters = result;
+				sp.LoadParameters();
 			}
 		}
 
