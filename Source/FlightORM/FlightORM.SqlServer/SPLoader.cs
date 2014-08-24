@@ -17,7 +17,6 @@ namespace FlightORM.SqlServer
 		public SPLoader(string connectionString)
 		{
 			 _connectionString = connectionString;
-
 		}
 
 		/// <summary>
@@ -34,31 +33,18 @@ namespace FlightORM.SqlServer
 				left join sys.schemas sc on sc.schema_id = sp.schema_id
 				where sp.type = 'P'", cnn);
 				cmd.CommandType = CommandType.Text;
-				var reader = cmd.ExecuteReader();
-				
-
-				return getProcedures(reader).ToList();
-			}
-		}
-
-		private IEnumerable<SPInfo> getProcedures(SqlDataReader reader)
-		{
-			var index = reader.GetColumnLookup();
-
-			foreach (var r in reader)
-			{
-				var sp = new SPInfo
+				using(var reader = cmd.ExecuteReader())
 				{
-					Id = reader.GetInt32(index["ID"]),
-					Name = reader.GetString(index["Name"]),
-					Schema = reader.GetString(index["Schema"]),
-					DateCreated = reader.GetDateTime(index["Created"]),
-					DateModified = reader.GetDateTime(index["Modified"])
-				};
-				yield return sp;
+					return getProcedures(reader).ToList();
+				}
 			}
 		}
 
+		/// <summary>
+		/// Gets a list of the parameters for the specified stored procedure
+		/// </summary>
+		/// <param name="procedure"></param>
+		/// <returns>All parameters for the specified query</returns>
 		public IList<SPParameter> GetParameters(SPInfo procedure)
 		{
 			var query = @"select p.name as Name, p.object_id as ProcedureId, p.parameter_id as 'position', t.name as 't.name', 
@@ -74,43 +60,28 @@ namespace FlightORM.SqlServer
 				cnn.Open();
 				var cmd = new SqlCommand(query, cnn);
 				cmd.Parameters.Add(new SqlParameter("@sp_id", procedure.Id));
-				var reader = cmd.ExecuteReader();
-				return getParameters(reader).Select(λ => λ.Item2).ToList();
+				using(var reader = cmd.ExecuteReader())
+				{
+					return getParameters(reader).Select(λ => λ.Item2).ToList();
+				}
 			}
 		}
 
-		private IEnumerable<Tuple<int, SPParameter>> getParameters(SqlDataReader reader)
-		{
-			var index = reader.GetColumnLookup();
-			foreach (var r in reader)
-			{
-				var procId = reader.GetInt32(index["ProcedureId"]);
-				var typeInfo = new DbTypeInfo();
-				typeInfo.TypeName = reader.GetString(index["t.name"]);
-				typeInfo.MaxLength = reader.GetInt16(index["t.maxLen"]);
-				typeInfo.Precision = reader.GetByte(index["t.precision"]);
-				typeInfo.Scale = reader.GetByte(index["t.scale"]);
-
-				var param = new SPParameter();
-				param.Name = reader.GetString(index["Name"]);
-				param.Position = reader.GetInt32(index["position"]);
-				param.TypeInfo = typeInfo;
-				param.IsOutput = reader.GetBoolean(index["output"]);
-				param.IsReadOnly = reader.GetBoolean(index["readonly"]);
-				param.HasDefault = reader.GetBoolean(index["hasDefault"]);
-				param.DefaultValue = reader.GetValue(index["defaultValue"]);
-
-				yield return Tuple.Create(procId, param);
-			}
-		}
-
+		/// <summary>
+		/// Runs the specified stored procedure and examines the output schema
+		/// Calling code should handle SQLExceptions for cases where the command is invalid
+		/// </summary>
+		/// <param name="procedure">The stored procedure to be tested</param>
+		/// <param name="parameterInfo">The required parameter, type info, and test value</param>
+		/// <param name="useRollback">If true the query will be run inside a transaction and rolled back</param>
+		/// <returns>A list of output schemas</returns>
 		public IList<SPResult> GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
 		{
 			using(var con = new SqlConnection(_connectionString))
 			{
+				var resultSet = new List<SPResult>();
 				SqlTransaction testTransaction = null;
 				SqlDataReader reader;
-				var resultSet = new List<SPResult>();
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
@@ -149,36 +120,87 @@ namespace FlightORM.SqlServer
 			}
 		}
 
-		public void ValidateProcedure(SPInfo procedure, SqlCommand SampleCommand, bool useRollback = true)
+		/// <summary>
+		/// Runs the specified stored procedure but doesn't read the result
+		/// This is used to make sure the command/query is actually valid
+		/// Calling code must handle the resulting SQL Exception
+		/// </summary>
+		/// <param name="procedure">The stored procedure to be tested</param>
+		/// <param name="parameterInfo">The required parameter, type info, and test value</param>
+		/// <param name="useRollback">If true the query will be run inside a transaction and rolled back</param>
+		public void TestExecution(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true)
 		{
 			using (var con = new SqlConnection(_connectionString))
 			{
+				var resultSet = new List<SPResult>();
 				SqlTransaction testTransaction = null;
 				SqlDataReader reader;
 
 				con.Open();
 				if (useRollback) testTransaction = con.BeginTransaction("SpTestTransaction");
-				SampleCommand.Connection = con;
-				SampleCommand.Transaction = testTransaction;
 
-				try
+				var cmd = new SqlCommand(string.Format("[{0}].{1}", procedure.Schema, procedure.Name));
+				cmd.CommandType = System.Data.CommandType.StoredProcedure;
+				cmd.Connection = con;
+				cmd.Transaction = testTransaction;
+
+				//Populate test parameters
+				foreach (var pi in parameterInfo)
 				{
-					reader = SampleCommand.ExecuteReader();
-					procedure.IsValid = true;
-					procedure.Error = null;
-				}
-				catch (SqlException ex)
-				{
-					procedure.IsValid = false;
-					procedure.Error = ex.Message;
-					return;
+					var p = new SqlParameter(pi.Name, pi.DBType);
+					p.Value = TypeHelpers.ConvertToType(pi.SampleValue, pi.DotNetType);
+					cmd.Parameters.Add(p);
 				}
 
+				reader = cmd.ExecuteReader();
 				reader.Close();
-				if (useRollback) testTransaction.Rollback();
-
-				
 			}
 		}
+
+		#region Private Methods
+
+		private IEnumerable<Tuple<int, SPParameter>> getParameters(SqlDataReader reader)
+		{
+			var index = reader.GetColumnLookup();
+			foreach (var r in reader)
+			{
+				var procId = reader.GetInt32(index["ProcedureId"]);
+				var typeInfo = new DbTypeInfo();
+				typeInfo.TypeName = reader.GetString(index["t.name"]);
+				typeInfo.MaxLength = reader.GetInt16(index["t.maxLen"]);
+				typeInfo.Precision = reader.GetByte(index["t.precision"]);
+				typeInfo.Scale = reader.GetByte(index["t.scale"]);
+
+				var param = new SPParameter();
+				param.Name = reader.GetString(index["Name"]);
+				param.Position = reader.GetInt32(index["position"]);
+				param.TypeInfo = typeInfo;
+				param.IsOutput = reader.GetBoolean(index["output"]);
+				param.IsReadOnly = reader.GetBoolean(index["readonly"]);
+				param.HasDefault = reader.GetBoolean(index["hasDefault"]);
+				param.DefaultValue = reader.GetValue(index["defaultValue"]);
+
+				yield return Tuple.Create(procId, param);
+			}
+		}
+
+		private IEnumerable<SPInfo> getProcedures(SqlDataReader reader)
+		{
+			var index = reader.GetColumnLookup();
+
+			foreach (var r in reader)
+			{
+				var sp = new SPInfo
+				{
+					Id = reader.GetInt32(index["ID"]),
+					Name = reader.GetString(index["Name"]),
+					Schema = reader.GetString(index["Schema"]),
+					DateCreated = reader.GetDateTime(index["Created"]),
+					DateModified = reader.GetDateTime(index["Modified"])
+				};
+				yield return sp;
+			}
+		}
+		#endregion
 	}
 }

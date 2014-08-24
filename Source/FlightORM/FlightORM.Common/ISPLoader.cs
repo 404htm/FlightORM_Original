@@ -7,6 +7,6 @@ namespace FlightORM.Common
 		IList<FlightORM.Common.SPInfo> GetProcedures();
 		IList<SPResult> GetOutputSchema(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true);
 		IList<SPParameter> GetParameters(SPInfo procedure);
-		void ValidateProcedure(SPInfo procedure, System.Data.SqlClient.SqlCommand SampleCommand, bool useRollback = true);
+		void TestExecution(SPInfo procedure, IList<IParameterTestInfo> parameterInfo, bool useRollback = true);
 	}
 }
