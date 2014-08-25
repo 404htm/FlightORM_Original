@@ -12,6 +12,7 @@ namespace FlightORM.Core
 		{
 			switch (type)
 			{
+				case "Object": return (Object)value;
 				case "Byte[]": return Convert.FromBase64String(value.Trim());
 				//TODO: Figure out other primary types not part of typecode
 			}

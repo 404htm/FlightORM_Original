@@ -18,7 +18,14 @@
 				<DataGridTextColumn Binding="{Binding Path = SampleValue}" Header="Value"></DataGridTextColumn>
 			</DataGrid.Columns>
 		</DataGrid>
-		<Button Content="Test" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="TestQuery"/>
+		<Button Margin="515,0,10,10" Height="20" VerticalAlignment="Bottom" Click="TestQuery" Padding="0">
+			<DockPanel >
+				<Image DockPanel.Dock="Left" Stretch="None" HorizontalAlignment="Left" Source="/FlightORM.UI;component/Icons/StatusAnnotations_Alert_16xMD_color.png" RenderTransformOrigin="0.512,0.702" />
+				<Label Content="Test"  Padding="0"></Label>
+			</DockPanel>
+
+		</Button>
+		<TextBlock HorizontalAlignment="Left" Margin="0,365,0,10" TextWrapping="Wrap"  Width="482" Foreground="Red" Text="{Binding ErrorText}"/>
 
 	</Grid>
 </UserControl>

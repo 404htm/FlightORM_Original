@@ -158,6 +158,19 @@
   <ItemGroup>
     <Resource Include="Icons\AddProperty_5538.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\StatusAnnotations_Complete_and_ok_16xSM_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\StatusAnnotations_Complete_and_ok_16xLG.png" />
+    <Resource Include="Icons\StatusAnnotations_Complete_and_ok_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\StatusAnnotations_Critical_16xMD_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\StatusAnnotations_Alert_16xMD_color.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

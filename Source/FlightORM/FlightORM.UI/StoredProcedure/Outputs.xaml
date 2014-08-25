@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-		<DataGrid ItemsSource="{Binding Path=Results[0].Definition.Columns}" AutoGenerateColumns="True"  >
+		<DataGrid ItemsSource="{Binding Path=Outputs.Columns}" AutoGenerateColumns="True"  >
 
 		</DataGrid>
 	</Grid>

@@ -68,25 +68,39 @@ namespace FlightORM.UI.Models
 			set { _config.UserFlags = value; }
 		}
 
+		public string ErrorText
+		{
+			get {  return _config.ErrorText; }
+		}
+
+		public bool? IsValid
+		{
+			get { return _config.IsValid; }
+		}
 		public new IList<SPParameterConfig> Parameters
 		{
 			get { return _config.Parameters; }
 		}
 
-		public IList<SPResultConfig> Results
+		public SPResultConfig Outputs
 		{
-			get; private set;
+			get { 
+				if (_config.Results == null) return null;
+				return _config.Results.FirstOrDefault(); 
+			 }
 		}
 
 		public void Run()
 		{
 			_config.LoadOutputs();
-
+			
 			//this._spAnalyzer.GetOutputSchema(this.Definition, values, true);
 			//TODO: Design resolver that deals with change detection and restoration of current values
 			//this.Results = this.Definition.OutputData.Select(d => new SPResultConfig(d)).ToList();
 			onPropChanged("Results");
 			onPropChanged("IsValid");
+			onPropChanged("ErrorText");
+			onPropChanged("Outputs");
 		}
 
 
