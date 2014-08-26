@@ -10,6 +10,8 @@ namespace FlightORM.Core
 	{
 		public static object ConvertToType(string value, string type)
 		{
+			if(value == null) return (object)DBNull.Value;
+
 			switch (type)
 			{
 				case "Object": return (Object)value;
