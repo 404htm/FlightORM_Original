@@ -12,13 +12,13 @@ namespace FlightORM.Common
 	{
 		public SPResult(int index)
 		{
-			Columns = new List<ResultElement>();
+			Columns = new List<OutputColumn>();
 			ResultIndex = index;
 			DateRetrieved = DateTime.UtcNow;
 		}	
 		
 		[DataMember] public int ResultIndex { get; private set; }
-		[DataMember] public List<ResultElement> Columns { get; private set;}
+		[DataMember] public List<OutputColumn> Columns { get; private set;}
 		[DataMember] public DateTime DateRetrieved { get; private set;}
 
 		/// <summary>Query returns one result making it likely that result type should be scalar </summary>

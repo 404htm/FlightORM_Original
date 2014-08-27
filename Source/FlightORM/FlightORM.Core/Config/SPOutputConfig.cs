@@ -9,14 +9,18 @@ using System.Threading.Tasks;
 namespace FlightORM.Core.Config
 {
 	[DataContract]
-	public class SPResultConfig
+	public class SPOutputConfig
 	{
 		[DataMember]
 		SPResult _definition;
 
-		public SPResultConfig(SPResult spResult)
+		public SPOutputConfig(SPResult spResult)
 		{
 			_definition = spResult;
+			Columns = _definition
+				.Columns
+				.Select(λ => new OutputColumnConfig(λ))
+				.ToList();
 		}
 
 		#region WrappedProperties
@@ -25,9 +29,9 @@ namespace FlightORM.Core.Config
 			get { return _definition.ResultIndex; }
 		}
 
-		public IList<FlightORM.Common.ResultElement> Columns
+		public IList<OutputColumnConfig> Columns
 		{
-			get { return _definition.Columns; }
+			get; private set;
 		}
 
 		public bool IsScalar

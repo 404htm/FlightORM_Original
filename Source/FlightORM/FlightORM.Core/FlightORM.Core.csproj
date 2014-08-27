@@ -42,8 +42,9 @@
   <ItemGroup>
     <Compile Include="Config\ConnectionInfo.cs" />
     <Compile Include="Config\GlobalSettings.cs" />
+    <Compile Include="Config\OutputColumnConfig.cs" />
     <Compile Include="Config\SPConfig.cs" />
-    <Compile Include="Config\SPResultConfig.cs" />
+    <Compile Include="Config\SPOutputConfig.cs" />
     <Compile Include="Config\SPParameterConfig.cs" />
     <Compile Include="Factories\SPLoaderFactory.cs" />
     <Compile Include="NamingHelpers.cs" />

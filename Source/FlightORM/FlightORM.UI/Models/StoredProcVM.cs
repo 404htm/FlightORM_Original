@@ -82,11 +82,11 @@ namespace FlightORM.UI.Models
 			get { return _config.Parameters; }
 		}
 
-		public SPResultConfig Outputs
+		public SPOutputConfig Outputs
 		{
 			get { 
-				if (_config.Results == null) return null;
-				return _config.Results.FirstOrDefault(); 
+				if (_config.Outputs == null) return null;
+				return _config.Outputs.FirstOrDefault(); 
 			 }
 		}
 

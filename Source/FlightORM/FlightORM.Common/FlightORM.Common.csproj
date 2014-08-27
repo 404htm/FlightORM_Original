@@ -44,8 +44,8 @@
     <Compile Include="ConfigBase.cs" />
     <Compile Include="IParameterTestInfo.cs" />
     <Compile Include="StoredProcedure\ISPLoader.cs" />
-    <Compile Include="ResultElement.cs" />
-    <Compile Include="StoredProcedure\SPResult.cs" />
+    <Compile Include="OutputColumn.cs" />
+    <Compile Include="StoredProcedure\SPOutput.cs" />
     <Compile Include="StoredProcedure\SPParameter.cs" />
     <Compile Include="StoredProcedure\SPInfo.cs" />
     <Compile Include="DbTypeInfo.cs" />

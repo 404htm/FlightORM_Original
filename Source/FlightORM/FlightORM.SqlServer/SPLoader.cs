@@ -110,7 +110,7 @@ namespace FlightORM.SqlServer
 							var result = new SPResult(resultIndex);
 							for (int c = 0; c < reader.FieldCount; c++)
 							{
-								result.Columns.Add(new ResultElement { Name = reader.GetName(c), Type = reader.GetFieldType(c) });
+								result.Columns.Add(new OutputColumn(reader.GetFieldType(c), reader.GetName(c)));
 							}
 							resultSet.Add(result);
 						}

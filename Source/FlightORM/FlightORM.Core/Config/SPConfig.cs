@@ -70,7 +70,7 @@ namespace FlightORM.Core.Config
 		public IList<SPParameterConfig> Parameters { get; private set; }
 
 		[DataMember]
-		public IList<SPResultConfig> Results { get; set; }
+		public IList<SPOutputConfig> Outputs { get; set; }
 
 		public void LoadParameters()
 		{
@@ -84,8 +84,8 @@ namespace FlightORM.Core.Config
 		{
 			string msg;
 			var result = _loader.GetOutputSchema(_core, this.Parameters.Cast<IParameterTestInfo>(), out msg);
-			Results = result
-				.Select(λ => new SPResultConfig(λ))
+			Outputs = result
+				.Select(λ => new SPOutputConfig(λ))
 				.ToList();
 
 			var isValid = msg == null;
