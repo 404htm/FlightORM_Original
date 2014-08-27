@@ -6,8 +6,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-		<DataGrid ItemsSource="{Binding Path=Outputs.Columns}" AutoGenerateColumns="True"  >
-
+		<DataGrid ItemsSource="{Binding Path=Outputs.Columns}" AutoGenerateColumns="False"  >
+			<DataGrid.Columns>
+				<DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Path=Enabled}"></DataGridCheckBoxColumn>
+				<DataGridTextColumn IsReadOnly="True" Width=".5*" Header="Column Name" Binding="{Binding Definition.Name, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTextColumn  Header="Friendly Name" Width=".5*" Binding="{Binding FriendlyName}"></DataGridTextColumn>
+				<DataGridTextColumn Header="Default Type" IsReadOnly="True" Binding="{Binding Definition.Type, Mode=OneWay}"></DataGridTextColumn>
+				<DataGridTextColumn Header="Type" Binding="{Binding Path=Type}"></DataGridTextColumn>
+			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
 </UserControl>

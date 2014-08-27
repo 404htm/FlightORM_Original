@@ -13,12 +13,16 @@ namespace FlightORM.Core.Config
 	{
 		public OutputColumnConfig(OutputColumn definition)
 		{
-			Definiton = definition;
-			DisplayName = Definiton.Name;
+			Definition = definition;
+
+			Enabled = true;
+			FriendlyName = definition.Name;
+			Type = definition.Type;
 		}
 
+		[DataMember] public Type Type { get; set; }
 		[DataMember] public bool Enabled { get; set;}
-		[DataMember] public OutputColumn Definiton { get; private set; }
-		[DataMember] public string DisplayName { get; private set; }
+		[DataMember] public OutputColumn Definition { get; private set; }
+		[DataMember] public string FriendlyName { get; private set; }
 	}
 }
