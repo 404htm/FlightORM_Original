@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="292.4" d:DesignWidth="429.2">
+	<Grid Margin="0,0,0,0">
 		<DataGrid ItemsSource="{Binding Path=Outputs.Columns}" AutoGenerateColumns="False"  >
 			<DataGrid.Columns>
 				<DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Path=Enabled}"></DataGridCheckBoxColumn>
