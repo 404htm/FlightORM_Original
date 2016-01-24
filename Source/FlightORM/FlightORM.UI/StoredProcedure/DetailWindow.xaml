@@ -1,8 +1,0 @@
-﻿<Window x:Class="FlightORM.UI.StoredProcedure.DetailWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:sp="clr-namespace:FlightORM.UI.StoredProcedure"
-		xmlns:vm="clr-namespace:FlightORM.Core.Config"
-        Title="{Binding Path=FriendlyName}" Height="400" Width="600">
-	<sp:DetailMain DataContext="{Binding}"></sp:DetailMain>
-</Window>
